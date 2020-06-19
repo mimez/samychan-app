@@ -1,5 +1,4 @@
-var baseUrl = "http://samychan.devbox.local/backend/"
-
+var baseUrl = process.env.REACT_APP_API_URL
 export default {
     buildFileUrl: function(scmPackageHash, scmFileId) {
         return baseUrl + scmPackageHash + "/file/" + scmFileId + "/json/";

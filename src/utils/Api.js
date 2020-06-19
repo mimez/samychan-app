@@ -38,6 +38,20 @@ var Api = {
       .catch(error => {
         console.log(error)
       })
+  },
+
+  saveFile(scmPackageHash, scmFileId, channels, callback) {
+
+    fetch(apiUrlGenerator.buildFileUrl(scmPackageHash, scmFileId), {
+      method: "POST",
+      body: JSON.stringify(channels)
+    })
+      .then(response => response.json())
+      .then(() => {
+        callback()
+      });
+
+    console.log(channels)
   }
 }
 

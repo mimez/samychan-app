@@ -82,7 +82,7 @@ export default (props) => {
         onSelectionChange={handleSelectionChange}
         selectedChannels={selectedChannels}
         channelActions={props.channelActions}
-
+        optionButtons={props.optionButtons}
       />
       <ChannelListChannels
         channels={channelsToDisplay}

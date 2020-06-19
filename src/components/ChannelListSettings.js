@@ -13,8 +13,20 @@ import ExportIcon from '@material-ui/icons/InsertDriveFile';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  title: {
+    flexGrow: 1,
+  },
+  button: {
+    marginRight: "1rem",
+  }
+}));
 
 export default (props) => {
+
+  const classes = useStyles();
 
   const [sortPopperIsVisible, setSortPopperIsVisible] = useState(false)
   const [selectionPopperIsVisible, setSelectionPopperIsVisible] = useState(false)
@@ -37,15 +49,17 @@ export default (props) => {
     props.onSortChange(sortOption.field, sortOption.dir, sortOption.type)
     setSortPopperIsVisible(false);
   }
-  let header;
+
+  let optionsButton
   if (props.selectedChannels.length > 0 && props.channelActions.length > 0) {
-    header =
-      <div>
+    optionsButton =
+      <span>
         <Button
           variant="contained"
           color="secondary"
           onClick={() => setSelectionPopperIsVisible(true)}
           ref={selectionAnchorRef}
+          className={classes.button}
         >
           {props.selectedChannels.length} items selected
           <ExpandMoreIcon />
@@ -63,16 +77,18 @@ export default (props) => {
             </ClickAwayListener>
           </Paper>
         </Popper>
-      </div>
-  } else {
-    header = <Typography variant="h6" noWrap>
-      Cable Digital
-    </Typography>
+      </span>
   }
 
   return (
     <Toolbar className="channel-list-settings">
-      {header}
+      <div>
+        {optionsButton}
+        {props.optionButtons}
+      </div>
+        <Typography variant="h6" noWrap className={classes.title}>
+          Cable Digital
+        </Typography>
       <div>
         <TextField
           label="Search..."
