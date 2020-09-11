@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {Route} from "react-router-dom";
-import File from './File';
-import Favorites from './Favorites';
-import Navigation from "./Navigation";
-import DownloadPackage from "./DownloadPackage";
+import File from '../File';
+import Favorites from '../Favorites';
+import PackageNavigation from "./PackageNavigation";
+import Downloader from "../Downloader";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Theme from "../Theme"
-import Api from "../utils/Api"
-import AppHeader from "./AppHeader"
+import Theme from "../../Theme"
+import Api from "../../utils/Api"
+import PackageHeader from "./PackageHeader"
 import { ThemeProvider } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -46,13 +46,13 @@ export default (props) => {
       <div className={classes.root}>
         <ThemeProvider theme={Theme}>
           <CssBaseline />
-          <AppHeader scmPackage={scmPackage} onToggleDrawer={handleDrawerToggle}/>
+          <PackageHeader scmPackage={scmPackage} onToggleDrawer={handleDrawerToggle}/>
           <div className={classes.mainContainer}>
-            <Navigation open={navOpen} scmPackage={scmPackage}/>
+            <PackageNavigation open={navOpen} scmPackage={scmPackage}/>
             <main className={classes.main}>
               <Route path="/:scmPackageHash/files/:scmFileId" component={File} />
               <Route path="/:scmPackageHash/favorites/:favNo" component={Favorites} />
-              <Route path="/:scmPackageHash/download" component={DownloadPackage} />
+              <Route path="/:scmPackageHash/download" component={Downloader} />
             </main>
           </div>
         </ThemeProvider>

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
-import ChannelList from "./ChannelList"
-import Api from "../utils/Api"
+import ChannelList from "./../ChannelList"
+import Api from "../../utils/Api"
 import Button from "@material-ui/core/Button"
 import SaveIcon from "@material-ui/icons/Save"
 import CircularProgress from "@material-ui/core/CircularProgress"

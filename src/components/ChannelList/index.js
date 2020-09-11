@@ -2,7 +2,6 @@ import React, {useState} from "react"
 import ChannelListSettings from "./ChannelListSettings";
 import ChannelListChannels from "./ChannelListChannels";
 
-
 export default (props) => {
 
   const [filter, setFilter] = useState({text: ""})

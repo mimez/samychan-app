@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
-import ChannelList from "./ChannelList";
-import Api from "../utils/Api";
+import ChannelList from "./../ChannelList";
+import Api from "../../utils/Api";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Tooltip from "@material-ui/core/Tooltip";
