@@ -1,7 +1,12 @@
 import React from "react";
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
 
 export default (props) => {
   return (
-    <h1>test</h1>
+    <Container>
+      <h1>Download</h1>
+      <p>Thank you for using SamyCHAN. Click the download button and save the file to your usb-stick. Afterwards you can import the file into your SAMSUNG television.</p>
+    </Container>
   )
 }
