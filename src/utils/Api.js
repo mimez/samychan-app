@@ -52,10 +52,33 @@ var Api = {
     console.log(channels)
   },
 
-  addChannelsToFav(scmPackageHash, favNo, channels, callback) {
+  addChannelsToFav(scmPackageHash, favNo, channelIds, callback) {
+    let channelData = {}
+    for (let i in channelIds) {
+      channelData[channelIds[i]] = {
+        channelId: channelIds[i],
+        action: "add"
+      }
+    }
     fetch(apiUrlGenerator.buildFavoriteUrl(scmPackageHash, favNo), {
       method: "POST",
-      body: JSON.stringify(channels)
+      body: JSON.stringify(channelData)
+    })
+      .then(response => response.json())
+      .then(() => {callback()})
+  },
+
+  removeChannelsFromFav(scmPackageHash, favNo, channelIds, callback) {
+    let channelData = {}
+    for (let i in channelIds) {
+      channelData[channelIds[i]] = {
+        channelId: channelIds[i],
+        action: "remove"
+      }
+    }
+    fetch(apiUrlGenerator.buildFavoriteUrl(scmPackageHash, favNo), {
+      method: "POST",
+      body: JSON.stringify(channelData)
     })
       .then(response => response.json())
       .then(() => {callback()})
