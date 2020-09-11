@@ -47,11 +47,18 @@ var Api = {
       body: JSON.stringify(channels)
     })
       .then(response => response.json())
-      .then(() => {
-        callback()
-      });
+      .then(() => {callback()});
 
     console.log(channels)
+  },
+
+  addChannelsToFav(scmPackageHash, favNo, channels, callback) {
+    fetch(apiUrlGenerator.buildFavoriteUrl(scmPackageHash, favNo), {
+      method: "POST",
+      body: JSON.stringify(channels)
+    })
+      .then(response => response.json())
+      .then(() => {callback()})
   }
 }
 

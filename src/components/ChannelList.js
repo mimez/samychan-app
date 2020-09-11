@@ -6,9 +6,7 @@ import ChannelListChannels from "./ChannelListChannels";
 export default (props) => {
 
   const [filter, setFilter] = useState({text: ""})
-
   const [sort, setSort] = useState({field: "channelNo", dir: "asc", type: "number"})
-
   const [selectedChannels, setSelectedChannels] = useState([])
 
   const filterChannels = (channels) => {
@@ -67,6 +65,10 @@ export default (props) => {
     setSelectedChannels(newSelectedChannels)
   }
 
+  const handleOptionButtonSuccess = () => {
+    setSelectedChannels([])
+  }
+
   let channelsToDisplay = getChannelsToDisplay(props.channels)
 
   return (
@@ -83,6 +85,7 @@ export default (props) => {
         selectedChannels={selectedChannels}
         channelActions={props.channelActions}
         optionButtons={props.optionButtons}
+        onOptionButtonSuccess={handleOptionButtonSuccess}
       />
       <ChannelListChannels
         channels={channelsToDisplay}

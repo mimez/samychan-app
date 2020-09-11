@@ -14,6 +14,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {makeStyles} from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -30,6 +31,7 @@ export default (props) => {
 
   const [sortPopperIsVisible, setSortPopperIsVisible] = useState(false)
   const [selectionPopperIsVisible, setSelectionPopperIsVisible] = useState(false)
+  const [channelActionIsInProgress, setChannelActionIsInProgress] = useState(false)
 
   const sortAnchorRef = React.useRef(null);
   const selectionAnchorRef = React.useRef(null);
@@ -62,6 +64,7 @@ export default (props) => {
           className={classes.button}
         >
           {props.selectedChannels.length} items selected
+          {channelActionIsInProgress && <CircularProgress size={24} />}
           <ExpandMoreIcon />
         </Button>
         <Popper open={selectionPopperIsVisible} anchorEl={selectionAnchorRef.current}>
@@ -69,7 +72,14 @@ export default (props) => {
             <ClickAwayListener onClickAway={() => setSelectionPopperIsVisible(false)}>
               <MenuList>
                 {props.channelActions.map((item, key) =>
-                  <MenuItem key={key} onClick={(event) => {item.onClick(props.selectedChannels); setSelectionPopperIsVisible(false)}}>
+                  <MenuItem key={key} onClick={(event) => {
+                    item.onClick(props.selectedChannels, () => {
+                      setChannelActionIsInProgress(false)
+                      props.onOptionButtonSuccess()
+                    })
+                    setChannelActionIsInProgress(true)
+                    setSelectionPopperIsVisible(false)
+                  }}>
                     {item.label}
                   </MenuItem>
                 )}
