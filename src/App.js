@@ -20,7 +20,7 @@ export default (props) => {
         <Router>
           <Route path="/stats" exact component={Stats} />
           <Route path="/" exact component={Home} />
-          <Route path="/p/:scmPackageHash" exact component={Package} />
+          <Route path="/p/:scmPackageHash" component={Package} />
         </Router>
       </ThemeProvider>
     </SnackbarProvider>

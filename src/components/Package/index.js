@@ -52,9 +52,9 @@ export default (props) => {
           <div className={classes.mainContainer}>
             <PackageNavigation open={navOpen} scmPackage={scmPackage}/>
             <main className={classes.main}>
-              <Route path="/:scmPackageHash/files/:scmFileId" component={(props) => <File {...props} scmPackage={scmPackage} onChange={() => {loadData()}} />} />
-              <Route path="/:scmPackageHash/favorites/:favNo" component={Favorites} />
-              <Route path="/:scmPackageHash/download" component={Downloader} />
+              <Route path="/p/:scmPackageHash/files/:scmFileId" component={(props) => <File {...props} scmPackage={scmPackage} onChange={() => {loadData()}} />} />
+              <Route path="/p/:scmPackageHash/favorites/:favNo" component={Favorites} />
+              <Route path="/p/:scmPackageHash/download" component={Downloader} />
             </main>
           </div>
       </div>

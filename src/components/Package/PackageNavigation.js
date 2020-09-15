@@ -29,7 +29,7 @@ export default (props) => {
     if (typeof props.scmPackage.files === "undefined") return []
     return props.scmPackage.files.map((file) => {
       let hash = props.scmPackage.hash
-      let link = React.forwardRef((props, ref) => <Link {...props} to={"/" + hash + "/files/" + file.scmFileId} ref={ref} />);
+      let link = React.forwardRef((props, ref) => <Link {...props} to={"/p/" + hash + "/files/" + file.scmFileId} ref={ref} />);
       return (
         <ListItem key={"list-item-file-" + file.scmFileId} button component={link}>
           <ListItemIcon><TvIcon /></ListItemIcon>
@@ -44,7 +44,7 @@ export default (props) => {
 
     return props.scmPackage.favorites.map((favorite) => {
       let hash = props.scmPackage.hash
-      let link = React.forwardRef((props, ref) => <Link {...props} to={"/" + hash + "/favorites/" + favorite.favNo} ref={ref} />);
+      let link = React.forwardRef((props, ref) => <Link {...props} to={"/p/" + hash + "/favorites/" + favorite.favNo} ref={ref} />);
       return (
         <ListItem key={"list-item-fav-" + favorite.favNo} button component={link}>
           <ListItemIcon><StarIcon /></ListItemIcon>

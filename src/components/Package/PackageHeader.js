@@ -22,7 +22,7 @@ export default (props) => {
   }
 
   let hash = props.scmPackage.hash
-  let link = React.forwardRef((props, ref) => <Link {...props} to={"/" + hash + "/download"} ref={ref} />);
+  let link = React.forwardRef((props, ref) => <Link {...props} to={"/p/" + hash + "/download"} ref={ref} />);
 
   return (
     <AppBar position="static">
