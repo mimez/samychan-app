@@ -19,15 +19,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default (props) => {
 
-  const classes = makeStyles()
+  const classes = useStyles()
   const snackbar = useSnackbar()
 
+  const [isInitialized, setIsInitialized] = useState(false)
   const [channels, setChannels] = useState([])
   const [modifiedChannels, setModifiedChannels] = useState({})
   const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
-    Api.getFile(props.match.params.scmPackageHash, props.match.params.scmFileId, (data) => setChannels(data.channels))
+    Api.getFile(props.match.params.scmPackageHash, props.match.params.scmFileId, (data) => {
+      setChannels(data.channels)
+      setIsInitialized(true)
+    })
   }, [props.match.params.scmPackageHash, props.match.params.scmFileId])
 
   const handleChannelChange = (channel) => {
@@ -48,6 +52,7 @@ export default (props) => {
       snackbar.showMessage(
         `${channelIds.length} channel(s) successfully added to Fav #${favNo}`
       )
+      props.onChange()
     })
   }
 
@@ -56,6 +61,7 @@ export default (props) => {
     Api.saveFile(props.match.params.scmPackageHash, props.match.params.scmFileId, modifiedChannels, () => {
       setModifiedChannels({})
       setIsSaving(false)
+      props.onChange()
     })
   }
 
@@ -74,17 +80,19 @@ export default (props) => {
     </Button>
   }
 
-  let channelActions = [
-    {label: "Add to Fav #1", onClick: (channels, clearAfterSaving) => {addChannelsToFav(channels, 1, clearAfterSaving)}},
-    {label: "Add to Fav #2", onClick: (channels, clearAfterSaving) => {addChannelsToFav(channels, 2, clearAfterSaving)}}
-  ]
+  let channelActions = []
+  props.scmPackage.favorites.forEach(element => {
+    channelActions.push({label: "Add to Fav #" + element.favNo, onClick: (channels, clearAfterSaving) => {addChannelsToFav(channels, element.favNo, clearAfterSaving)}})
+  })
 
   return (
-    <ChannelList
-      channels={channels}
-      onChannelChange={handleChannelChange}
-      channelActions={channelActions}
-      optionButtons={modifiedChannelsAction}
-    />
-  );
+    isInitialized
+      ? <ChannelList
+          channels={channels}
+          onChannelChange={handleChannelChange}
+          channelActions={channelActions}
+          optionButtons={modifiedChannelsAction}
+        />
+      : <h1>Loading...</h1>
+  )
 }

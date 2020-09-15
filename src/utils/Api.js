@@ -82,6 +82,14 @@ var Api = {
     })
       .then(response => response.json())
       .then(() => {callback()})
+  },
+
+  getStats(callback) {
+    fetch(apiUrlGenerator.buildStatsUrl(), {
+      method: "GET"
+    })
+      .then(response => response.json())
+      .then(data => {callback(data)})
   }
 }
 

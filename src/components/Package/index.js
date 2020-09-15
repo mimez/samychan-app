@@ -38,24 +38,25 @@ export default (props) => {
   }
 
   useEffect(() => {
-    Api.getPackage(props.match.params.scmPackageHash, (data) => setScmPackage(data))
+    loadData()
   }, [props.match.params.scmPackageHash])
+
+  const loadData = () => {
+    Api.getPackage(props.match.params.scmPackageHash, (data) => setScmPackage(data))
+  }
 
   var renderApp = () => {
     return (
       <div className={classes.root}>
-        <ThemeProvider theme={Theme}>
-          <CssBaseline />
           <PackageHeader scmPackage={scmPackage} onToggleDrawer={handleDrawerToggle}/>
           <div className={classes.mainContainer}>
             <PackageNavigation open={navOpen} scmPackage={scmPackage}/>
             <main className={classes.main}>
-              <Route path="/:scmPackageHash/files/:scmFileId" component={File} />
+              <Route path="/:scmPackageHash/files/:scmFileId" component={(props) => <File {...props} scmPackage={scmPackage} onChange={() => {loadData()}} />} />
               <Route path="/:scmPackageHash/favorites/:favNo" component={Favorites} />
               <Route path="/:scmPackageHash/download" component={Downloader} />
             </main>
           </div>
-        </ThemeProvider>
       </div>
     )
   }
