@@ -225,8 +225,8 @@ export default React.memo((props) => {
           onFocus={focusInput}
           autoFocus={props.cursorPos.channelId === props.channelData.channelId && props.cursorPos.field === 'name'}
           onBlur={blurInput}
+          readOnly={props.channelNameReadOnly}
         />
-
       </div>
     </div>
   )

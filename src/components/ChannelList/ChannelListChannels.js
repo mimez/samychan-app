@@ -73,6 +73,7 @@ export default (props) => {
         style={style}
         onSelectionChange={handleSelectionChange}
         selected={selected}
+        channelNameReadOnly={props.channelNameReadOnly}
       ></Channel>
     )
   }

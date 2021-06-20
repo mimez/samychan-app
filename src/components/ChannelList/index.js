@@ -91,6 +91,7 @@ export default (props) => {
         onChannelChange={handleChannelChange}
         onSelectionChange={handleSelectionChange}
         selectedChannels={selectedChannels}
+        channelNameReadOnly={props.channelNameReadOnly}
       />
     </div>
   )
