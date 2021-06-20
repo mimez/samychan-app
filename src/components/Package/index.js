@@ -8,6 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Api from "../../utils/Api"
 import PackageHeader from "./PackageHeader"
 import { makeStyles } from '@material-ui/core/styles';
+import { Helmet } from 'react-helmet'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,15 +54,18 @@ const Package = (props) => {
   var renderApp = () => {
     return (
       <div className={classes.root}>
-          <PackageHeader scmPackage={scmPackageNavigation} onToggleDrawer={handleDrawerToggle}/>
-          <div className={classes.mainContainer}>
-            <PackageNavigation open={navOpen} scmPackage={scmPackageNavigation}/>
-            <main className={classes.main}>
-              <Route path="/p/:scmPackageHash/files/:scmFileId" component={(props) => <File {...props} scmPackage={scmPackage} onChange={() => {updateNavigation()}} />} />
-              <Route path="/p/:scmPackageHash/favorites/:favNo" component={(props) => <Favorites {...props} onChange={() => {updateNavigation()}} />} />
-              <Route path="/p/:scmPackageHash/download" component={Downloader} />
-            </main>
-          </div>
+        <Helmet>
+          <title>{scmPackage.filename} | SamyCHAN</title>
+        </Helmet>
+        <PackageHeader scmPackage={scmPackageNavigation} onToggleDrawer={handleDrawerToggle}/>
+        <div className={classes.mainContainer}>
+          <PackageNavigation open={navOpen} scmPackage={scmPackageNavigation}/>
+          <main className={classes.main}>
+            <Route path="/p/:scmPackageHash/files/:scmFileId" component={(props) => <File {...props} scmPackage={scmPackage} onChange={() => {updateNavigation()}} />} />
+            <Route path="/p/:scmPackageHash/favorites/:favNo" component={(props) => <Favorites {...props} onChange={() => {updateNavigation()}} />} />
+            <Route path="/p/:scmPackageHash/download" component={Downloader} />
+          </main>
+        </div>
       </div>
     )
   }
