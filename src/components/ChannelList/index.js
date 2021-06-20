@@ -19,11 +19,9 @@ export default (props) => {
   }
 
   const sortChannels = (channels) => {
-    let retA = 1, retB = -1
-    if (sort.dir === "desc") {
-      retA = -1
-      retB = 1
-    }
+    let retA = sort.dir === "desc" ? 1 : -1
+    let retB = sort.dir === "desc" ? -1 : 1
+
     switch (sort.type) {
       case "number":
         channels.sort((a,b) => parseInt(a[sort.field]) > parseInt(b[sort.field]) ? retA : retB)
