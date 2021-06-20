@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import Api from "../../utils/Api"
 import {Link} from "react-router-dom";
 
-export default (props) => {
+const Stats = (props) => {
 
   const [stats, setStats] = useState([]);
 
@@ -25,3 +25,5 @@ export default (props) => {
     </div>
   )
 }
+
+export default Stats

@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default (props) => {
+const ChannelListSettings = (props) => {
 
   const classes = useStyles();
 
@@ -133,3 +133,5 @@ export default (props) => {
     </Toolbar>
   );
 }
+
+export default ChannelListSettings

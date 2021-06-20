@@ -1,6 +1,7 @@
 import React from "react"
 import {makeStyles} from "@material-ui/core/styles";
 import {useState} from 'react';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const useStyles = makeStyles(theme => ({
   root: (props) => ({
@@ -50,7 +51,7 @@ const useStyles = makeStyles(theme => ({
   })
 }));
 
-export default React.memo((props) => {
+const Channel = React.memo((props) => {
 
   /**
    * Testplan
@@ -198,10 +199,10 @@ export default React.memo((props) => {
         onKeyDown={handleKeyNav}
         id={"channel-" + props.channelData.channelId}
       >
-        <input
-          type="checkbox"
+        <Checkbox
           onChange={toggleChannelSelection}
           checked={props.selected}
+          color="secondary"
         />
         <input
           type="text"
@@ -231,3 +232,5 @@ export default React.memo((props) => {
     </div>
   )
 })
+
+export default Channel

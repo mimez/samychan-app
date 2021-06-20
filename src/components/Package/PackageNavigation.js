@@ -22,12 +22,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default (props) => {
+const PackageNavigation = (props) => {
+  const classes = useStyles(props);
+
   if (!props.scmPackage) {
     return <div></div>
   }
-
-  const classes = useStyles(props);
 
   const getNavFiles = () => {
     if (typeof props.scmPackage.files === "undefined") return []
@@ -73,3 +73,4 @@ export default (props) => {
   );
 }
 
+export default PackageNavigation

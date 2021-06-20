@@ -12,7 +12,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 require('dotenv').config()
 
-export default (props) => {
+const App = (props) => {
   return (
     <SnackbarProvider SnackbarProps={{ autoHideDuration: 4000 }}>
       <ThemeProvider theme={Theme}>
@@ -26,3 +26,5 @@ export default (props) => {
     </SnackbarProvider>
   );
 }
+
+export default App

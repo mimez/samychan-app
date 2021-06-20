@@ -1,5 +1,5 @@
 var baseUrl = process.env.REACT_APP_API_URL
-export default {
+const ApiUrlGenerator = {
     buildFileUrl: function(scmPackageHash, scmFileId) {
         return baseUrl + scmPackageHash + "/file/" + scmFileId + "/json/"
     },
@@ -44,3 +44,5 @@ export default {
         return baseUrl + "stats.json"
     }
 }
+
+export default ApiUrlGenerator

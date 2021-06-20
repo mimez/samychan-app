@@ -3,7 +3,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Theme from "../../Theme";
 import {ThemeProvider} from "@material-ui/core/styles";
 
-export default (props) => {
+const Home = (props) => {
   return (
     <ThemeProvider theme={Theme}>
       <CssBaseline />
@@ -11,3 +11,5 @@ export default (props) => {
     </ThemeProvider>
   )
 }
+
+export default Home

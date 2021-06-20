@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default (props) => {
+const Package = (props) => {
   const classes = useStyles(props);
   const [scmPackage, setScmPackage] = useState(undefined)
   const [scmPackageNavigation, setScmPackageNavigation] = useState(undefined)
@@ -77,3 +77,4 @@ export default (props) => {
   )
 }
 
+export default Package

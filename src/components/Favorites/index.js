@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from "react"
 import ChannelList from "./../ChannelList";
 import Api from "../../utils/Api";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
-import Tooltip from "@material-ui/core/Tooltip";
 import {useSnackbar} from 'material-ui-snackbar-provider'
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
@@ -21,25 +18,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default (props) => {
+const Favorites = (props) => {
 
   const snackbar = useSnackbar()
   const [isInitialized, setIsInitialized] = useState(false)
   const [channels, setChannels] = useState([])
   const [modifiedChannels, setModifiedChannels] = useState({})
-  const channelListOptions = [
-    <Tooltip title="Add channel">
-      <Fab color="secondary" size="medium" aria-label="add">
-        <AddIcon />
-      </Fab>
-    </Tooltip>
-  ]
   const [isSaving, setIsSaving] = useState(false)
   const classes = useStyles()
-
-  useEffect(() => {
-    initData()
-  }, [props.match.params.scmPackageHash, props.match.params.favNo])
 
   const initData = () => {
     Api.getFavorites(props.match.params.scmPackageHash, props.match.params.favNo, (data) => {
@@ -47,6 +33,11 @@ export default (props) => {
       setIsInitialized(true)
     })
   }
+
+  useEffect(() => {
+    initData()
+  }, [props.match.params.scmPackageHash, props.match.params.favNo])
+
 
   const save = () => {
     let newChannels = [...channels]
@@ -68,6 +59,7 @@ export default (props) => {
       snackbar.showMessage(
         `${channelIds.length} channel(s) successfully removed from Fav #${favNo}`
       )
+      props.onChange()
       initData()
     })
   }
@@ -99,7 +91,7 @@ export default (props) => {
   }
 
   let channelActions = [
-    {label: "Remove from Fav", onClick: (channels, clearAfterSaving) => {removeChannelsFromFav(channels, 1, clearAfterSaving)}},
+    {label: "Remove from Fav", onClick: (channels, clearAfterSaving) => {removeChannelsFromFav(channels, props.match.params.favNo, clearAfterSaving)}},
   ]
 
   return (
@@ -118,3 +110,5 @@ export default (props) => {
       </Snackbar>
   );
 }
+
+export default Favorites

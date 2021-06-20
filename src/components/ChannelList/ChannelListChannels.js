@@ -3,7 +3,7 @@ import {FixedSizeList as List} from "react-window";
 import React, {useState} from "react";
 import Channel from "./Channel";
 
-export default (props) => {
+const ChannelListChannels = (props) => {
 
   const [cursorPos, setCursorPos] = useState({channelId: 0, field: "no"})
 
@@ -98,3 +98,5 @@ export default (props) => {
     </div>
   )
 }
+
+export default ChannelListChannels

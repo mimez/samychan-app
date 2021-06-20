@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import ChannelListSettings from "./ChannelListSettings";
 import ChannelListChannels from "./ChannelListChannels";
 
-export default (props) => {
+const Channel = (props) => {
 
   const defaultSort = {field: "channel_no", dir: "asc", type: "number"}
 
@@ -97,3 +97,5 @@ export default (props) => {
     </div>
   )
 }
+
+export default Channel

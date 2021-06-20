@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default (props) => {
+const PackageHeader = (props) => {
   const classes = useStyles();
   const handleDrawerToggle = () => {
     props.onToggleDrawer()
@@ -42,3 +42,5 @@ export default (props) => {
     </AppBar>
   )
 }
+
+export default PackageHeader

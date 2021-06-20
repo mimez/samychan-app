@@ -4,7 +4,7 @@ import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import Button from "@material-ui/core/Button";
 import apiUrlGenerator from "../../utils/apiUrlGenerator";
 
-export default (props) => {
+const Download = (props) => {
   console.log(props)
   return (
     <Container>
@@ -14,3 +14,5 @@ export default (props) => {
     </Container>
   )
 }
+
+export default Download

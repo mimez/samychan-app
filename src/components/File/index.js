@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default (props) => {
+const File = (props) => {
 
   const classes = useStyles()
   const snackbar = useSnackbar()
@@ -108,3 +108,5 @@ export default (props) => {
       </Snackbar>
   )
 }
+
+export default File
