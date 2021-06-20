@@ -4,8 +4,10 @@ import ChannelListChannels from "./ChannelListChannels";
 
 export default (props) => {
 
+  const defaultSort = {field: "channel_no", dir: "asc", type: "number"}
+
   const [filter, setFilter] = useState({text: ""})
-  const [sort, setSort] = useState({field: "channelNo", dir: "asc", type: "number"})
+  const [sort, setSort] = useState(defaultSort)
   const [selectedChannels, setSelectedChannels] = useState([])
 
   const filterChannels = (channels) => {
