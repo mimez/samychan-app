@@ -30,6 +30,7 @@ export default (props) => {
           break
         case "current":
           newIndex = currentIndex
+          break
         default:
       }
 

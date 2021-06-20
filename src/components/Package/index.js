@@ -4,12 +4,9 @@ import File from '../File';
 import Favorites from '../Favorites';
 import PackageNavigation from "./PackageNavigation";
 import Downloader from "../Downloader";
-import CssBaseline from '@material-ui/core/CssBaseline';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Theme from "../../Theme"
 import Api from "../../utils/Api"
 import PackageHeader from "./PackageHeader"
-import { ThemeProvider } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
