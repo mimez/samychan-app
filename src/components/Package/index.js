@@ -28,6 +28,7 @@ const useStyles = makeStyles(theme => ({
 export default (props) => {
   const classes = useStyles(props);
   const [scmPackage, setScmPackage] = useState(undefined)
+  const [scmPackageNavigation, setScmPackageNavigation] = useState(undefined)
   const [navOpen, setNavOpen] = useState(true)
 
   const handleDrawerToggle = () => {
@@ -39,18 +40,25 @@ export default (props) => {
   }, [props.match.params.scmPackageHash])
 
   const loadData = () => {
-    Api.getPackage(props.match.params.scmPackageHash, (data) => setScmPackage(data))
+    Api.getPackage(props.match.params.scmPackageHash, (data) => {
+      setScmPackage(data)
+      setScmPackageNavigation(data)
+    })
+  }
+
+  const updateNavigation = () => {
+    Api.getPackage(props.match.params.scmPackageHash, (data) => setScmPackageNavigation(data))
   }
 
   var renderApp = () => {
     return (
       <div className={classes.root}>
-          <PackageHeader scmPackage={scmPackage} onToggleDrawer={handleDrawerToggle}/>
+          <PackageHeader scmPackage={scmPackageNavigation} onToggleDrawer={handleDrawerToggle}/>
           <div className={classes.mainContainer}>
-            <PackageNavigation open={navOpen} scmPackage={scmPackage}/>
+            <PackageNavigation open={navOpen} scmPackage={scmPackageNavigation}/>
             <main className={classes.main}>
-              <Route path="/p/:scmPackageHash/files/:scmFileId" component={(props) => <File {...props} scmPackage={scmPackage} onChange={() => {loadData()}} />} />
-              <Route path="/p/:scmPackageHash/favorites/:favNo" component={(props) => <Favorites {...props} onChange={() => {loadData()}} />} />
+              <Route path="/p/:scmPackageHash/files/:scmFileId" component={(props) => <File {...props} scmPackage={scmPackage} onChange={() => {updateNavigation()}} />} />
+              <Route path="/p/:scmPackageHash/favorites/:favNo" component={(props) => <Favorites {...props} onChange={() => {updateNavigation()}} />} />
               <Route path="/p/:scmPackageHash/download" component={Downloader} />
             </main>
           </div>

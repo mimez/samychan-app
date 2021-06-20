@@ -97,7 +97,7 @@ export default (props) => {
         {props.optionButtons}
       </div>
         <Typography variant="h6" noWrap className={classes.title}>
-          Cable Digital
+          {props.headline}
         </Typography>
       <div>
         <TextField

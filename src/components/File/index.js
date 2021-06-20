@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react"
 import ChannelList from "./../ChannelList"
 import Api from "../../utils/Api"
 import Button from "@material-ui/core/Button"
+import Snackbar from "@material-ui/core/Snackbar"
+import Alert from '@material-ui/lab/Alert';
 import SaveIcon from "@material-ui/icons/Save"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import {makeStyles} from "@material-ui/core/styles";
@@ -24,12 +26,14 @@ export default (props) => {
 
   const [isInitialized, setIsInitialized] = useState(false)
   const [channels, setChannels] = useState([])
+  const [filename, setFilename] = useState(undefined)
   const [modifiedChannels, setModifiedChannels] = useState({})
   const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
     Api.getFile(props.match.params.scmPackageHash, props.match.params.scmFileId, (data) => {
       setChannels(data.channels)
+      setFilename(data.label)
       setIsInitialized(true)
     })
   }, [props.match.params.scmPackageHash, props.match.params.scmFileId])
@@ -62,6 +66,9 @@ export default (props) => {
       setModifiedChannels({})
       setIsSaving(false)
       props.onChange()
+      snackbar.showMessage(
+        `File successfully saved`
+      )
     })
   }
 
@@ -75,7 +82,7 @@ export default (props) => {
       className={classes.button}
     >
       <SaveIcon />
-      Save {Object.keys(modifiedChannels).length} item
+      Save {Object.keys(modifiedChannels).length} item(s)
       {isSaving && <CircularProgress size={24} />}
     </Button>
   }
@@ -92,7 +99,12 @@ export default (props) => {
           onChannelChange={handleChannelChange}
           channelActions={channelActions}
           optionButtons={modifiedChannelsAction}
+          headline={filename}
         />
-      : <h1>Loading...</h1>
+      : <Snackbar open={true}>
+        <Alert elevation={6} variant="filled" severity="info">
+          Loading ...
+        </Alert>
+      </Snackbar>
   )
 }

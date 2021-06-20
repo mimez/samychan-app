@@ -23,6 +23,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default (props) => {
+  if (!props.scmPackage) {
+    return <div></div>
+  }
+
   const classes = useStyles(props);
 
   const getNavFiles = () => {

@@ -7,6 +7,8 @@ import Tooltip from "@material-ui/core/Tooltip";
 import {useSnackbar} from 'material-ui-snackbar-provider'
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
+import Snackbar from "@material-ui/core/Snackbar"
+import Alert from '@material-ui/lab/Alert';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {makeStyles} from "@material-ui/core/styles";
 
@@ -22,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 export default (props) => {
 
   const snackbar = useSnackbar()
+  const [isInitialized, setIsInitialized] = useState(false)
   const [channels, setChannels] = useState([])
   const [modifiedChannels, setModifiedChannels] = useState({})
   const channelListOptions = [
@@ -41,6 +44,7 @@ export default (props) => {
   const initData = () => {
     Api.getFavorites(props.match.params.scmPackageHash, props.match.params.favNo, (data) => {
       setChannels(data.selectedChannels)
+      setIsInitialized(true)
     })
   }
 
@@ -99,12 +103,18 @@ export default (props) => {
   ]
 
   return (
+    isInitialized ?
     <ChannelList
       channels={channels}
       channelActions={channelActions}
       channelNameReadOnly={true}
       onChannelChange={handleChannelChange}
       optionButtons={modifiedChannelsAction}
-    />
+      headline={"Favorites #" + props.match.params.favNo}
+    /> : <Snackbar open={true}>
+        <Alert elevation={6} variant="filled" severity="info">
+          Loading ...
+        </Alert>
+      </Snackbar>
   );
 }

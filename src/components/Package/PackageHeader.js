@@ -21,6 +21,10 @@ export default (props) => {
     props.onToggleDrawer()
   }
 
+  if (!props.scmPackage) {
+    return <AppBar></AppBar>
+  }
+
   let hash = props.scmPackage.hash
   let link = React.forwardRef((props, ref) => <Link {...props} to={"/p/" + hash + "/download"} ref={ref} />);
 

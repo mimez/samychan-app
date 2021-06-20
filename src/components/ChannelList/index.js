@@ -85,6 +85,7 @@ export default (props) => {
         channelActions={props.channelActions}
         optionButtons={props.optionButtons}
         onOptionButtonSuccess={handleOptionButtonSuccess}
+        headline={props.headline}
       />
       <ChannelListChannels
         channels={channelsToDisplay}
