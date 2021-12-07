@@ -38,6 +38,7 @@ const Package = (props) => {
 
   useEffect(() => {
     loadData()
+    //eslint-disable-next-line
   }, [props.match.params.scmPackageHash])
 
   const loadData = () => {

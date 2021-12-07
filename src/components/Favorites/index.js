@@ -36,6 +36,7 @@ const Favorites = (props) => {
 
   useEffect(() => {
     initData()
+    //eslint-disable-next-line
   }, [props.match.params.scmPackageHash, props.match.params.favNo])
 
 
