@@ -9,6 +9,7 @@ import Api from "../../utils/Api"
 import PackageHeader from "./PackageHeader"
 import { makeStyles } from '@material-ui/core/styles';
 import { Helmet } from 'react-helmet'
+import Error from "../Error"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,6 +32,7 @@ const Package = (props) => {
   const [scmPackage, setScmPackage] = useState(undefined)
   const [scmPackageNavigation, setScmPackageNavigation] = useState(undefined)
   const [navOpen, setNavOpen] = useState(true)
+  const [isError, setError] = useState(null)
 
   const handleDrawerToggle = () => {
     setNavOpen(!navOpen)
@@ -45,14 +47,14 @@ const Package = (props) => {
     Api.getPackage(props.match.params.scmPackageHash, (data) => {
       setScmPackage(data)
       setScmPackageNavigation(data)
-    })
+    }, (error) => setError(error))
   }
 
   const updateNavigation = () => {
     Api.getPackage(props.match.params.scmPackageHash, (data) => setScmPackageNavigation(data))
   }
 
-  var renderApp = () => {
+  var render = () => {
     return (
       <div className={classes.root}>
         <Helmet>
@@ -77,9 +79,13 @@ const Package = (props) => {
     )
   }
 
-  return (
-    scmPackage ? renderApp() : showLoadingScreen()
-  )
+  if (isError) {
+    return <Error onReset={loadData} />
+  } else if (typeof scmPackage != "undefined") {
+    return render()
+  } else {
+    return showLoadingScreen()
+  }
 }
 
 export default Package

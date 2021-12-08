@@ -1,13 +1,15 @@
 import apiUrlGenerator from "./apiUrlGenerator";
 /*@todo: error-handling implementieren, z.B. ob der result auch json ist usw....*/
 var Api = {
-  getPackage(scmPackageId, callback) {
+  getPackage(scmPackageId, cbSuccess, cbError) {
     fetch(apiUrlGenerator.buildPackageUrl(scmPackageId))
       .then(results => {
         return results.json()
       })
       .then(data => {
-        callback(data)
+        cbSuccess(data)
+      }).catch(error => {
+        cbError(error)
       })
   },
 
