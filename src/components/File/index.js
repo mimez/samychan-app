@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import ChannelList from "./../ChannelList"
 import Api from "../../utils/Api"
+import apiUrlGenerator from "../../utils/apiUrlGenerator"
 import Button from "@mui/material/Button"
 import Snackbar from "@mui/material/Snackbar"
 import Alert from '@mui/material/Alert';
@@ -100,6 +101,7 @@ const File = (props) => {
           channelActions={channelActions}
           optionButtons={modifiedChannelsAction}
           headline={filename}
+          exportUrl={apiUrlGenerator.buildFileExportUrl(props.match.params.scmPackageHash, props.match.params.scmFileId)}
         />
       : <Snackbar open={true}>
         <Alert elevation={6} variant="filled" severity="info">

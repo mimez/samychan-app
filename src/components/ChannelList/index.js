@@ -86,6 +86,7 @@ const Channel = (props) => {
         optionButtons={props.optionButtons}
         onOptionButtonSuccess={handleOptionButtonSuccess}
         headline={props.headline}
+        exportUrl={props.exportUrl}
       />
       <ChannelListChannels
         channels={channelsToDisplay}

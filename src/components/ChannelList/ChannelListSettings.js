@@ -56,6 +56,10 @@ const ChannelListSettings = (props) => {
     setSortPopperIsVisible(false);
   }
 
+  const handleExport = () => {
+    window.open(props.exportUrl )
+  }
+
   let optionsButton
   if (props.selectedChannels.length > 0 && props.channelActions.length > 0) {
     optionsButton =
@@ -94,13 +98,25 @@ const ChannelListSettings = (props) => {
       </span>
   }
 
+  let exportButton
+  if (props.exportUrl !== undefined && props.exportUrl.length > 0) {
+    exportButton = <Tooltip title="Export as CSV">
+      <IconButton 
+        aria-label="delete" 
+        size="large"
+        onClick={handleExport}>
+        <ExportIcon />
+      </IconButton>
+    </Tooltip>
+  }
+
   return (
     <Toolbar className="channel-list-settings" className={classes.toolbar}>
       <div>
         {optionsButton}
         {props.optionButtons}
       </div>
-        <Typography variant="h4" noWrap className={classes.title}>
+        <Typography variant="h4" component="h1" noWrap className={classes.title}>
           {props.headline}
         </Typography>
       <div>
@@ -110,11 +126,7 @@ const ChannelListSettings = (props) => {
           onChange={handleFilterTextChange}
           variant="standard"
         />
-        <Tooltip title="Export as CSV">
-          <IconButton aria-label="delete" size="large">
-            <ExportIcon />
-          </IconButton>
-        </Tooltip>
+        {exportButton}
         <Tooltip title="Change sort" open={sortPopperIsVisible ? false : undefined}>
           <IconButton
             ref={sortAnchorRef}
