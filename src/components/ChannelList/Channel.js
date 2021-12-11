@@ -1,7 +1,7 @@
 import React from "react"
-import {makeStyles} from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 import {useState} from 'react';
-import Checkbox from '@material-ui/core/Checkbox';
+import Checkbox from '@mui/material/Checkbox';
 
 const useStyles = makeStyles(theme => ({
   root: (props) => ({

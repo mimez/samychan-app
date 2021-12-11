@@ -1,20 +1,20 @@
 import React, {useState} from "react";
-import TextField from '@material-ui/core/TextField';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
-import SortIcon from '@material-ui/icons/Sort';
-import Popper from "@material-ui/core/Popper";
-import Paper from '@material-ui/core/Paper';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import MenuItem from "@material-ui/core/MenuItem";
-import MenuList from "@material-ui/core/MenuList";
-import ExportIcon from '@material-ui/icons/InsertDriveFile';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {makeStyles} from "@material-ui/core/styles";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import TextField from '@mui/material/TextField';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
+import SortIcon from '@mui/icons-material/Sort';
+import Popper from "@mui/material/Popper";
+import Paper from '@mui/material/Paper';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import MenuItem from "@mui/material/MenuItem";
+import MenuList from "@mui/material/MenuList";
+import ExportIcon from '@mui/icons-material/InsertDriveFile';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import makeStyles from '@mui/styles/makeStyles';
+import CircularProgress from "@mui/material/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -106,12 +106,16 @@ const ChannelListSettings = (props) => {
           onChange={handleFilterTextChange}
         />
         <Tooltip title="Export as CSV">
-          <IconButton aria-label="delete">
+          <IconButton aria-label="delete" size="large">
             <ExportIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="Change sort" open={sortPopperIsVisible ? false : undefined}>
-          <IconButton ref={sortAnchorRef} aria-label="change sort" onClick={() => setSortPopperIsVisible(true)}>
+          <IconButton
+            ref={sortAnchorRef}
+            aria-label="change sort"
+            onClick={() => setSortPopperIsVisible(true)}
+            size="large">
             <SortIcon />
           </IconButton>
         </Tooltip>

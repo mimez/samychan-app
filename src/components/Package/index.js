@@ -4,10 +4,10 @@ import File from '../File';
 import Favorites from '../Favorites';
 import PackageNavigation from "./PackageNavigation";
 import Downloader from "../Downloader";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress';
 import Api from "../../utils/Api"
 import PackageHeader from "./PackageHeader"
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { Helmet } from 'react-helmet'
 import Error from "../Error"
 

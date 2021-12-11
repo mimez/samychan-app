@@ -1,7 +1,7 @@
 import React from "react";
-import Container from '@material-ui/core/Container';
-import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
-import Button from "@material-ui/core/Button";
+import Container from '@mui/material/Container';
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import Button from "@mui/material/Button";
 import apiUrlGenerator from "../../utils/apiUrlGenerator";
 
 const Download = (props) => {

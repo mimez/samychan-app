@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react"
 import ChannelList from "./../ChannelList"
 import Api from "../../utils/Api"
-import Button from "@material-ui/core/Button"
-import Snackbar from "@material-ui/core/Snackbar"
-import Alert from '@material-ui/lab/Alert';
-import SaveIcon from "@material-ui/icons/Save"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import {makeStyles} from "@material-ui/core/styles";
+import Button from "@mui/material/Button"
+import Snackbar from "@mui/material/Snackbar"
+import Alert from '@mui/material/Alert';
+import SaveIcon from "@mui/icons-material/Save"
+import CircularProgress from "@mui/material/CircularProgress"
+import makeStyles from '@mui/styles/makeStyles';
 import {useSnackbar} from 'material-ui-snackbar-provider'
 
 const useStyles = makeStyles((theme) => ({

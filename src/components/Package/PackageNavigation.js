@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import List from '@material-ui/core/List';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import TvIcon from '@material-ui/icons/Tv';
-import StarIcon from '@material-ui/icons/Star';
-import { makeStyles } from '@material-ui/core/styles';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import List from '@mui/material/List';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import TvIcon from '@mui/icons-material/Tv';
+import StarIcon from '@mui/icons-material/Star';
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
