@@ -8,6 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import TvIcon from '@mui/icons-material/Tv';
 import StarIcon from '@mui/icons-material/Star';
 import makeStyles from '@mui/styles/makeStyles';
+import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
@@ -23,7 +24,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PackageNavigation = (props) => {
-  const classes = useStyles(props);
+  const classes = useStyles(props)
+  const path = useLocation().pathname
 
   if (!props.scmPackage) {
     return <div></div>
@@ -33,9 +35,10 @@ const PackageNavigation = (props) => {
     if (typeof props.scmPackage.files === "undefined") return []
     return props.scmPackage.files.map((file) => {
       let hash = props.scmPackage.hash
-      let link = React.forwardRef((props, ref) => <Link {...props} to={"/p/" + hash + "/files/" + file.scmFileId} ref={ref} />);
+      let linkTo = "/p/" + hash + "/files/" + file.scmFileId
+      let link = React.forwardRef((props, ref) => <Link {...props} to={linkTo} ref={ref} />);
       return (
-        <ListItem key={"list-item-file-" + file.scmFileId} button component={link}>
+        <ListItem key={"list-item-file-" + file.scmFileId} button component={link} selected={linkTo === path}>
           <ListItemIcon><TvIcon /></ListItemIcon>
           <ListItemText primary={file.label} secondary={file.channelCount + " channels"} />
         </ListItem>
@@ -48,9 +51,10 @@ const PackageNavigation = (props) => {
 
     return props.scmPackage.favorites.map((favorite) => {
       let hash = props.scmPackage.hash
-      let link = React.forwardRef((props, ref) => <Link {...props} to={"/p/" + hash + "/favorites/" + favorite.favNo} ref={ref} />);
+      let linkTo = "/p/" + hash + "/favorites/" + favorite.favNo
+      let link = React.forwardRef((props, ref) => <Link {...props} to={linkTo} ref={ref} />);
       return (
-        <ListItem key={"list-item-fav-" + favorite.favNo} button component={link}>
+        <ListItem key={"list-item-fav-" + favorite.favNo} button component={link} selected={linkTo === path}>
           <ListItemIcon><StarIcon /></ListItemIcon>
           <ListItemText primary={"Fav #" + favorite.favNo} secondary={favorite.channelCount + " channels"} />
         </ListItem>
