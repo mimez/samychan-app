@@ -11,7 +11,7 @@ import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
-    background: theme.palette.primary.light,
+    /*background: theme.palette.primary.light,*/
     width: props.open ? "auto" : "60px",
   }),
   container: {

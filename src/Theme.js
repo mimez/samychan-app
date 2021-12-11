@@ -1,14 +1,14 @@
-import { createTheme, adaptV4Theme } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 
-export default createTheme(adaptV4Theme({
+export default createTheme({
   palette: {
-    mode: 'dark',
+    /*mode: 'dark',
     primary: {
       main: '#463750',
     },
     secondary: {
       main: '#f44f1f'
-    }
+    }*/
   }
-}))
+})
 

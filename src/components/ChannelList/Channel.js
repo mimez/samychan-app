@@ -9,9 +9,9 @@ const useStyles = makeStyles(theme => ({
     marginBottom: "5px",
     marginRight: "5px",
     width: "100%",
-    borderRadius: "5px",
     overflow: "hidden",
-    background: props.selected ? "#6b5f73" : "#48434b",
+    background: props.selected ? theme.palette.primary.light : "",
+    borderBottom: "1px solid " + theme.palette.divider,
     display: "flex",
     justifyContent: "space-between",
     padding: "5px",
@@ -22,13 +22,13 @@ const useStyles = makeStyles(theme => ({
     },
     "&:hover input:not([type='checkbox']), & input:focus": {
       outline: "none",
-      background: "#ffffff21"
+      background: "#33333321"
     },
     "& input.name, & input.channel-no": {
       display: "inline-block",
       padding: "5px",
       marginRight: "1rem",
-      color: "#fff"
+      /*color: "#fff"*/
     },
     "& input.channel-no": {
       width: "60px",
@@ -46,7 +46,8 @@ const useStyles = makeStyles(theme => ({
       padding: "5px"
     },
     "&:focus, &:focus-within": {
-      background: "#6b5f73"
+      background: theme.palette.primary.light,
+      color: theme.palette.primary.contrastText
     }
   })
 }));

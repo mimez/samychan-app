@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginRight: "1rem",
+  },
+  toolbar: {
+    paddingTop: "30px",
+    paddingBottom: "20px"
   }
 }));
 
@@ -91,12 +95,12 @@ const ChannelListSettings = (props) => {
   }
 
   return (
-    <Toolbar className="channel-list-settings">
+    <Toolbar className="channel-list-settings" className={classes.toolbar}>
       <div>
         {optionsButton}
         {props.optionButtons}
       </div>
-        <Typography variant="h6" noWrap className={classes.title}>
+        <Typography variant="h4" noWrap className={classes.title}>
           {props.headline}
         </Typography>
       <div>
@@ -104,6 +108,7 @@ const ChannelListSettings = (props) => {
           label="Search..."
           value={props.filterText}
           onChange={handleFilterTextChange}
+          variant="standard"
         />
         <Tooltip title="Export as CSV">
           <IconButton aria-label="delete" size="large">
