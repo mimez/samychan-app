@@ -44,6 +44,7 @@ const Package = (props) => {
   }, [props.match.params.scmPackageHash])
 
   const loadData = () => {
+    setError(null)
     Api.getPackage(props.match.params.scmPackageHash, (data) => {
       setScmPackage(data)
       setScmPackageNavigation(data)
