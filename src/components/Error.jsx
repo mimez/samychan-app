@@ -1,17 +1,18 @@
-import React from "react"
+import React from 'react';
 import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
+import Button from '@mui/material/Button';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import makeStyles from '@mui/styles/makeStyles';
+import PropTypes from 'prop-types';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   icon: {
-    fontSize: "50px"
-  }
+    fontSize: '50px',
+  },
 }));
 
-const Error = (props) => {
-  const classes = useStyles()
+const Error = function ({ onReset }) {
+  const classes = useStyles();
 
   return (
     <Grid
@@ -22,18 +23,20 @@ const Error = (props) => {
       justifyContent="center"
       style={{ minHeight: '100vh' }}
     >
-
       <Grid item xs={3}>
-        <div style={{textAlign: "center"}}>
+        <div style={{ textAlign: 'center' }}>
           <ErrorOutlineIcon className={classes.icon} />
           <h1>Error</h1>
           <p>Something went wrong</p>
-          <Link onClick={props.onReset} href="#" underline="hover">Retry</Link>
+          <Button onClick={onReset} href="#" underline="hover">Retry</Button>
         </div>
-      </Grid>   
-
+      </Grid>
     </Grid>
   );
-}
+};
 
-export default Error
+Error.propTypes = {
+  onReset: PropTypes.element.isRequired,
+};
+
+export default Error;

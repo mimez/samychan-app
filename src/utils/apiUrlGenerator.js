@@ -1,48 +1,48 @@
-var baseUrl = process.env.REACT_APP_API_URL
+const baseUrl = process.env.REACT_APP_API_URL;
 const ApiUrlGenerator = {
-    buildFileUrl: function(scmPackageHash, scmFileId) {
-        return baseUrl + scmPackageHash + "/file/" + scmFileId + "/json/"
-    },
+  buildFileUrl(scmPackageHash, scmFileId) {
+    return `${baseUrl}${scmPackageHash}/file/${scmFileId}/json/`;
+  },
 
-    buildFileExportUrl: function(scmPackageHash, scmFileId) {
-        return baseUrl + scmPackageHash + "/file/" + scmFileId + "/csv/"
-    },
+  buildFileExportUrl(scmPackageHash, scmFileId) {
+    return `${baseUrl}${scmPackageHash}/file/${scmFileId}/csv/`;
+  },
 
-    buildPackageUrl: function(scmPackageHash) {
-        return baseUrl + scmPackageHash + ".json"
-    },
+  buildPackageUrl(scmPackageHash) {
+    return `${baseUrl}${scmPackageHash}.json`;
+  },
 
-    buildReorderUrl: function(scmPackageHash, scmFileId) {
-        return baseUrl + scmPackageHash + "/file/" + scmFileId + "/reorder/"
-    },
+  buildReorderUrl(scmPackageHash, scmFileId) {
+    return `${baseUrl}${scmPackageHash}/file/${scmFileId}/reorder/`;
+  },
 
-    buildFavoriteUrl: function(scmPackageHash, favNo) {
-        return baseUrl + scmPackageHash + "/favorites/" + favNo + ".json"
-    },
+  buildFavoriteUrl(scmPackageHash, favNo) {
+    return `${baseUrl}${scmPackageHash}/favorites/${favNo}.json`;
+  },
 
-    buildChannelsUrl: function(scmPackageHash) {
-        return baseUrl + scmPackageHash + "/channels.json"
-    },
+  buildChannelsUrl(scmPackageHash) {
+    return `${baseUrl}${scmPackageHash}/channels.json`;
+  },
 
-    buildDownloadUrl: function(scmPackageHash) {
-        return baseUrl + scmPackageHash + "/download/"
-    },
+  buildDownloadUrl(scmPackageHash) {
+    return `${baseUrl}${scmPackageHash}/download/`;
+  },
 
-    buildUploadUrl: function() {
-        return baseUrl + "upload/"
-    },
+  buildUploadUrl() {
+    return `${baseUrl}upload/`;
+  },
 
-    buildUploadJsonUrl: function() {
-        return baseUrl + "upload.json"
-    },
+  buildUploadJsonUrl() {
+    return `${baseUrl} + 'upload.json`;
+  },
 
-    buildImportSettingsUrl: function(scmPackageHash) {
-        return baseUrl + scmPackageHash + "/import-settings.json"
-    },
+  buildImportSettingsUrl(scmPackageHash) {
+    return `${baseUrl}${scmPackageHash}/import-settings.json`;
+  },
 
-    buildStatsUrl: function() {
-        return baseUrl + "stats.json"
-    }
-}
+  buildStatsUrl() {
+    return `${baseUrl}stats.json`;
+  },
+};
 
-export default ApiUrlGenerator
+export default ApiUrlGenerator;

@@ -9,7 +9,7 @@ import Api from "../../utils/Api"
 import PackageHeader from "./PackageHeader"
 import makeStyles from '@mui/styles/makeStyles';
 import { Helmet } from 'react-helmet'
-import Error from "../Error"
+import Error from "../Error.jsx"
 
 const useStyles = makeStyles(theme => ({
   root: {

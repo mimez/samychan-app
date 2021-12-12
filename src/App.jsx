@@ -1,18 +1,18 @@
-import React from 'react'
-import './custom.scss'
-import 'jquery/dist/jquery.min.js'
-import Package from './components/Package'
-import Home from './components/Home'
-import Stats from './components/Stats'
-import {BrowserRouter as Router, Route} from "react-router-dom"
-import { SnackbarProvider } from 'material-ui-snackbar-provider'
+import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { SnackbarProvider } from 'material-ui-snackbar-provider';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
-import Theme from "./Theme";
-import CssBaseline from "@mui/material/CssBaseline";
+import CssBaseline from '@mui/material/CssBaseline';
+import './custom.scss';
+// import 'jquery/dist/jquery.min.js';
+import Package from './components/Package';
+import Home from './components/Home';
+import Stats from './components/Stats';
+import Theme from './Theme';
 
-require('dotenv').config()
+require('dotenv').config();
 
-const App = (props) => {
+const App = function () {
   return (
     <SnackbarProvider SnackbarProps={{ autoHideDuration: 4000 }}>
       <StyledEngineProvider injectFirst>
@@ -27,6 +27,6 @@ const App = (props) => {
       </StyledEngineProvider>
     </SnackbarProvider>
   );
-}
+};
 
-export default App
+export default App;
