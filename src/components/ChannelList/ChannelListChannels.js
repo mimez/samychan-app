@@ -1,65 +1,65 @@
-import AutoSizer from "react-virtualized-auto-sizer";
-import {FixedSizeList as List} from "react-window";
-import React, {useState} from "react";
-import Channel from "./Channel";
+import AutoSizer from 'react-virtualized-auto-sizer';
+import { FixedSizeList as List } from 'react-window';
+import React, { useState } from 'react';
+import Channel from './Channel';
 
-const ChannelListChannels = (props) => {
-
-  const [cursorPos, setCursorPos] = useState({channelId: 0, field: "no"})
+const ChannelListChannels = function (props) {
+  const [cursorPos, setCursorPos] = useState({ channelId: 0, field: 'no' });
 
   const handleKeyNavigation = (dir, field) => {
-    console.log("handleKeyNavigation")
-    var currentIndex, newIndex
-    for (let i in props.channels) {
+    console.log('handleKeyNavigation');
+    let currentIndex; let
+      newIndex;
+    for (const i in props.channels) {
       if (cursorPos.channelId !== props.channels[i].channelId) {
-        continue
+        continue;
       }
-      currentIndex = parseInt(i)
+      currentIndex = parseInt(i);
       switch (dir) {
-        case "left":
-          newIndex = currentIndex - 1
-          break
-        case "right":
-          newIndex = currentIndex + 1
-          break
-        case "down":
-          newIndex = currentIndex + 1
-          break
-        case "up":
-          newIndex = currentIndex - 1
-          break
-        case "current":
-          newIndex = currentIndex
-          break
+        case 'left':
+          newIndex = currentIndex - 1;
+          break;
+        case 'right':
+          newIndex = currentIndex + 1;
+          break;
+        case 'down':
+          newIndex = currentIndex + 1;
+          break;
+        case 'up':
+          newIndex = currentIndex - 1;
+          break;
+        case 'current':
+          newIndex = currentIndex;
+          break;
         default:
       }
 
-      if (typeof props.channels[newIndex] !== "undefined") {
-        setCursorPos({channelId: props.channels[newIndex].channelId, field: field})
+      if (typeof props.channels[newIndex] !== 'undefined') {
+        setCursorPos({ channelId: props.channels[newIndex].channelId, field });
       }
     }
-  }
+  };
 
   const handleChannelChange = (channel) => {
-    if (typeof props.onChannelChange === "function") {
-      props.onChannelChange(channel)
+    if (typeof props.onChannelChange === 'function') {
+      props.onChannelChange(channel);
     }
-  }
+  };
 
   const handleCursorChange = (channelId, field) => {
-    setCursorPos({channelId: channelId, field: field})
-  }
+    setCursorPos({ channelId, field });
+  };
 
   const handleSelectionChange = (channelId) => {
-    props.onSelectionChange(channelId)
-  }
+    props.onSelectionChange(channelId);
+  };
 
   let channelTabIndex = 0;
 
-  const Row = ({ index, style }) => {
-    let channel = props.channels[index]
-    let selected = props.selectedChannels.indexOf(channel.channelId) !== -1
-    channelTabIndex = channelTabIndex + 1
+  const Row = function ({ index, style }) {
+    const channel = props.channels[index];
+    const selected = props.selectedChannels.indexOf(channel.channelId) !== -1;
+    channelTabIndex += 1;
 
     return (
       <Channel
@@ -74,9 +74,9 @@ const ChannelListChannels = (props) => {
         onSelectionChange={handleSelectionChange}
         selected={selected}
         channelNameReadOnly={props.channelNameReadOnly}
-      ></Channel>
-    )
-  }
+      />
+    );
+  };
 
   return (
     <div id="channel-list-container">
@@ -96,7 +96,7 @@ const ChannelListChannels = (props) => {
         )}
       </AutoSizer>
     </div>
-  )
-}
+  );
+};
 
-export default ChannelListChannels
+export default ChannelListChannels;

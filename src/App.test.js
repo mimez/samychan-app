@@ -1,21 +1,22 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Navigation from './components/Navigation';
-import {BrowserRouter as Router} from "react-router-dom";
 
 test('renders learn react link', () => {
-  let scmPackage = {
+  const scmPackage = {
     files: [
-      {scmFileId: 123, label: "Testfile"}
-    ]
-  }
+      { scmFileId: 123, label: 'Testfile' },
+    ],
+  };
   const { getByText } = render(
     <Router>
-        <Navigation
-        open={true}
+      <Navigation
+        open
         scmPackage={scmPackage}
       />
-    </Router>);
+    </Router>,
+  );
   const label = getByText(/Testfile/i);
   expect(label).toBeInTheDocument();
 });

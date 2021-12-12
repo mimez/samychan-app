@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, useParams } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import makeStyles from '@mui/styles/makeStyles';
 import { Helmet } from 'react-helmet';
-import PropTypes from 'prop-types';
 import File from '../File';
 import Favorites from '../Favorites';
 import PackageNavigation from './PackageNavigation';
@@ -28,8 +27,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Package = function ({ scmPackageHash }) {
+const Package = function () {
   const classes = useStyles();
+  const { scmPackageHash } = useParams();
   const [scmPackage, setScmPackage] = useState(undefined);
   const [scmPackageNavigation, setScmPackageNavigation] = useState(undefined);
   const [navOpen, setNavOpen] = useState(true);
@@ -50,7 +50,7 @@ const Package = function ({ scmPackageHash }) {
   useEffect(() => {
     loadData();
     // eslint-disable-next-line
-  }, [props.match.params.scmPackageHash])
+  }, [scmPackageHash])
 
   const updateNavigation = () => {
     Api.getPackage(scmPackageHash, (data) => setScmPackageNavigation(data));
@@ -89,10 +89,6 @@ const Package = function ({ scmPackageHash }) {
     return render();
   }
   return showLoadingScreen();
-};
-
-Package.propTypes = {
-  scmPackageHash: PropTypes.element.isRequired,
 };
 
 export default Package;

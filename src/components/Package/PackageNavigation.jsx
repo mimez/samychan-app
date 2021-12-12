@@ -8,11 +8,12 @@ import ListItemText from '@mui/material/ListItemText';
 import TvIcon from '@mui/icons-material/Tv';
 import StarIcon from '@mui/icons-material/Star';
 import makeStyles from '@mui/styles/makeStyles';
+import PropTypes from 'prop-types';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((open) => ({
   root: (props) => ({
     /* background: theme.palette.primary.light, */
-    width: props.open ? 'auto' : '60px',
+    width: open ? 'auto' : '60px',
   }),
   container: {
     overflow: 'hidden',
@@ -22,19 +23,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PackageNavigation = function (props) {
-  const classes = useStyles(props);
+const PackageNavigation = function ({ scmPackage, open }) {
+  const classes = useStyles(open);
   const path = useLocation().pathname;
 
-  if (!props.scmPackage) {
+  if (!scmPackage) {
     return <div />;
   }
 
   const getNavFiles = () => {
-    if (typeof props.scmPackage.files === 'undefined') return [];
-    return props.scmPackage.files.map((file) => {
-      const { hash } = props.scmPackage;
+    if (typeof scmPackage.files === 'undefined') return [];
+    return scmPackage.files.map((file) => {
+      const { hash } = scmPackage;
       const linkTo = `/p/${hash}/files/${file.scmFileId}`;
+      // eslint-disable-next-line
       const link = React.forwardRef((props, ref) => <Link {...props} to={linkTo} ref={ref} />);
       return (
         <ListItem key={`list-item-file-${file.scmFileId}`} button component={link} selected={linkTo === path}>
@@ -46,11 +48,12 @@ const PackageNavigation = function (props) {
   };
 
   const getNavFavorites = () => {
-    if (typeof props.scmPackage.favorites === 'undefined') return [];
+    if (typeof scmPackage.favorites === 'undefined') return [];
 
-    return props.scmPackage.favorites.map((favorite) => {
-      const { hash } = props.scmPackage;
+    return scmPackage.favorites.map((favorite) => {
+      const { hash } = scmPackage;
       const linkTo = `/p/${hash}/favorites/${favorite.favNo}`;
+      // eslint-disable-next-line
       const link = React.forwardRef((props, ref) => <Link {...props} to={linkTo} ref={ref} />);
       return (
         <ListItem key={`list-item-fav-${favorite.favNo}`} button component={link} selected={linkTo === path}>
@@ -74,6 +77,11 @@ const PackageNavigation = function (props) {
       </div>
     </div>
   );
+};
+
+PackageNavigation.propTypes = {
+  scmPackage: PropTypes.object,
+  open: PropTypes.bool,
 };
 
 export default PackageNavigation;

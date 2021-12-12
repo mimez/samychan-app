@@ -8,24 +8,27 @@ import makeStyles from '@mui/styles/makeStyles';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import PropTypes from 'prop-types';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   filenameHeadline: {
     flexGrow: 1,
   },
 }));
 
-const PackageHeader = function (props) {
+const PackageHeader = function ({ onToggleDrawer, scmPackage }) {
   const classes = useStyles();
   const handleDrawerToggle = () => {
-    props.onToggleDrawer();
+    onToggleDrawer();
   };
 
-  if (!props.scmPackage) {
+  if (!scmPackage) {
     return <AppBar />;
   }
 
-  const { hash } = props.scmPackage;
+  const { hash } = scmPackage;
+
+  // eslint-disable-next-line
   const link = React.forwardRef((props, ref) => <Link {...props} to={`/p/${hash}/download`} ref={ref} />);
 
   return (
@@ -41,12 +44,17 @@ const PackageHeader = function (props) {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" className={classes.filenameHeadline}>
-          {props.scmPackage.filename}
+          {scmPackage.filename}
         </Typography>
         <Button variant="contained" color="secondary" component={link} startIcon={<CloudDownloadIcon />}>Download</Button>
       </Toolbar>
     </AppBar>
   );
+};
+
+PackageHeader.propTypes = {
+  onToggleDrawer: PropTypes.func,
+  scmPackage: PropTypes.object,
 };
 
 export default PackageHeader;

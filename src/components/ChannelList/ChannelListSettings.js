@@ -1,68 +1,75 @@
-import React, {useState} from "react";
+import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import SortIcon from '@mui/icons-material/Sort';
-import Popper from "@mui/material/Popper";
+import Popper from '@mui/material/Popper';
 import Paper from '@mui/material/Paper';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-import MenuItem from "@mui/material/MenuItem";
-import MenuList from "@mui/material/MenuList";
+import MenuItem from '@mui/material/MenuItem';
+import MenuList from '@mui/material/MenuList';
 import ExportIcon from '@mui/icons-material/InsertDriveFile';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import makeStyles from '@mui/styles/makeStyles';
-import CircularProgress from "@mui/material/CircularProgress";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
   button: {
-    marginRight: "1rem",
+    marginRight: '1rem',
   },
   toolbar: {
-    paddingTop: "30px",
-    paddingBottom: "20px"
-  }
+    paddingTop: '30px',
+    paddingBottom: '20px',
+  },
 }));
 
-const ChannelListSettings = (props) => {
-
+const ChannelListSettings = function (props) {
   const classes = useStyles();
 
-  const [sortPopperIsVisible, setSortPopperIsVisible] = useState(false)
-  const [selectionPopperIsVisible, setSelectionPopperIsVisible] = useState(false)
-  const [channelActionIsInProgress, setChannelActionIsInProgress] = useState(false)
+  const [sortPopperIsVisible, setSortPopperIsVisible] = useState(false);
+  const [selectionPopperIsVisible, setSelectionPopperIsVisible] = useState(false);
+  const [channelActionIsInProgress, setChannelActionIsInProgress] = useState(false);
 
   const sortAnchorRef = React.useRef(null);
   const selectionAnchorRef = React.useRef(null);
 
   const sortOptions = [
-    {label: "channel no asc", field: "channel_no", dir: "asc", type: "number"},
-    {label: "channel no desc", field: "channel_no", dir: "desc", type: "number"},
-    {label: "name asc", field: "name", dir: "asc", type: "text"},
-    {label: "name desc", field: "name", dir: "desc", type: "text"}
-  ]
+    {
+      label: 'channel no asc', field: 'channel_no', dir: 'asc', type: 'number',
+    },
+    {
+      label: 'channel no desc', field: 'channel_no', dir: 'desc', type: 'number',
+    },
+    {
+      label: 'name asc', field: 'name', dir: 'asc', type: 'text',
+    },
+    {
+      label: 'name desc', field: 'name', dir: 'desc', type: 'text',
+    },
+  ];
 
   const handleFilterTextChange = (e) => {
     props.onFilterTextChange(e.target.value);
-  }
+  };
 
   const handleSortChange = (sortOption) => {
-    props.onSortChange(sortOption.field, sortOption.dir, sortOption.type)
+    props.onSortChange(sortOption.field, sortOption.dir, sortOption.type);
     setSortPopperIsVisible(false);
-  }
+  };
 
   const handleExport = () => {
-    window.open(props.exportUrl )
-  }
+    window.open(props.exportUrl);
+  };
 
-  let optionsButton
+  let optionsButton;
   if (props.selectedChannels.length > 0 && props.channelActions.length > 0) {
-    optionsButton =
+    optionsButton = (
       <span>
         <Button
           variant="contained"
@@ -71,7 +78,9 @@ const ChannelListSettings = (props) => {
           ref={selectionAnchorRef}
           className={classes.button}
         >
-          {props.selectedChannels.length} items selected
+          {props.selectedChannels.length}
+          {' '}
+          items selected
           {channelActionIsInProgress && <CircularProgress size={24} />}
           <ExpandMoreIcon />
         </Button>
@@ -79,35 +88,42 @@ const ChannelListSettings = (props) => {
           <Paper>
             <ClickAwayListener onClickAway={() => setSelectionPopperIsVisible(false)}>
               <MenuList>
-                {props.channelActions.map((item, key) =>
-                  <MenuItem key={key} onClick={(event) => {
-                    item.onClick(props.selectedChannels, () => {
-                      setChannelActionIsInProgress(false)
-                      props.onOptionButtonSuccess()
-                    })
-                    setChannelActionIsInProgress(true)
-                    setSelectionPopperIsVisible(false)
-                  }}>
+          {props.channelActions.map((item, key) => (
+                <MenuItem
+                    key={key}
+                    onClick={(event) => {
+                      item.onClick(props.selectedChannels, () => {
+                        setChannelActionIsInProgress(false);
+                        props.onOptionButtonSuccess();
+                      });
+                      setChannelActionIsInProgress(true);
+                      setSelectionPopperIsVisible(false);
+                    }}
+                  >
                     {item.label}
                   </MenuItem>
-                )}
-              </MenuList>
+              ))}
+        </MenuList>
             </ClickAwayListener>
           </Paper>
         </Popper>
       </span>
+    );
   }
 
-  let exportButton
+  let exportButton;
   if (props.exportUrl !== undefined && props.exportUrl.length > 0) {
-    exportButton = <Tooltip title="Export as CSV">
-      <IconButton 
-        aria-label="delete" 
-        size="large"
-        onClick={handleExport}>
-        <ExportIcon />
-      </IconButton>
-    </Tooltip>
+    exportButton = (
+      <Tooltip title="Export as CSV">
+        <IconButton
+          aria-label="delete"
+          size="large"
+          onClick={handleExport}
+        >
+          <ExportIcon />
+        </IconButton>
+      </Tooltip>
+    );
   }
 
   return (
@@ -116,9 +132,9 @@ const ChannelListSettings = (props) => {
         {optionsButton}
         {props.optionButtons}
       </div>
-        <Typography variant="h4" component="h1" noWrap className={classes.title}>
-          {props.headline}
-        </Typography>
+      <Typography variant="h4" component="h1" noWrap className={classes.title}>
+        {props.headline}
+      </Typography>
       <div>
         <TextField
           label="Search..."
@@ -132,7 +148,8 @@ const ChannelListSettings = (props) => {
             ref={sortAnchorRef}
             aria-label="change sort"
             onClick={() => setSortPopperIsVisible(true)}
-            size="large">
+            size="large"
+          >
             <SortIcon />
           </IconButton>
         </Tooltip>
@@ -153,6 +170,6 @@ const ChannelListSettings = (props) => {
       </div>
     </Toolbar>
   );
-}
+};
 
-export default ChannelListSettings
+export default ChannelListSettings;

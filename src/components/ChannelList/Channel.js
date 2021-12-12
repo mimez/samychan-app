@@ -1,59 +1,57 @@
-import React from "react"
+import React, { useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import {useState} from 'react';
 import Checkbox from '@mui/material/Checkbox';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: (props) => ({
-    boxSizing: "border-box",
-    marginBottom: "5px",
-    marginRight: "5px",
-    width: "100%",
-    overflow: "hidden",
-    background: props.selected ? theme.palette.primary.light : "",
-    borderBottom: "1px solid " + theme.palette.divider,
-    display: "flex",
-    justifyContent: "space-between",
-    padding: "5px",
+    boxSizing: 'border-box',
+    marginBottom: '5px',
+    marginRight: '5px',
+    width: '100%',
+    overflow: 'hidden',
+    background: props.selected ? theme.palette.primary.light : '',
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '5px',
     "& input:not([type='checkbox'])": {
-      border: "0",
-      backgroundColor: "transparent",
-      width: "50px"
+      border: '0',
+      backgroundColor: 'transparent',
+      width: '50px',
     },
     "&:hover input:not([type='checkbox']), & input:focus": {
-      outline: "none",
-      background: "#33333321"
+      outline: 'none',
+      background: '#33333321',
     },
-    "& input.name, & input.channel-no": {
-      display: "inline-block",
-      padding: "5px",
-      marginRight: "1rem",
-      /*color: "#fff"*/
+    '& input.name, & input.channel-no': {
+      display: 'inline-block',
+      padding: '5px',
+      marginRight: '1rem',
+      /* color: "#fff" */
     },
-    "& input.channel-no": {
-      width: "60px",
-      fontSize: "15px",
-      textAlign: "right",
-      marginRight: "5px"
+    '& input.channel-no': {
+      width: '60px',
+      fontSize: '15px',
+      textAlign: 'right',
+      marginRight: '5px',
     },
-    "& input.name": {
+    '& input.name': {
       flexGrow: 1,
-      fontWeight: "bolder",
-      textOverflow: "ellipsis",
-      width: "10rem",
-      overflow: "hidden",
-      fontSize: "15px",
-      padding: "5px"
+      fontWeight: 'bolder',
+      textOverflow: 'ellipsis',
+      width: '10rem',
+      overflow: 'hidden',
+      fontSize: '15px',
+      padding: '5px',
     },
-    "&:focus, &:focus-within": {
+    '&:focus, &:focus-within': {
       background: theme.palette.primary.light,
-      color: theme.palette.primary.contrastText
-    }
-  })
+      color: theme.palette.primary.contrastText,
+    },
+  }),
 }));
 
 const Channel = React.memo((props) => {
-
   /**
    * Testplan
    * Creatign a good user expierience is very important for editing a whole bunch of channels.
@@ -75,10 +73,10 @@ const Channel = React.memo((props) => {
    * the parent-state into the local state. After leaving the edit-mode we trigger a
    * event so the parent component can handle the change
    */
-  const [isEditMode, setIsEditMode] = useState(false)
-  const [channelNo, setChannelNo] = useState("")
-  const [channelName, setChannelName] = useState("")
-  const classes = useStyles(props)
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [channelNo, setChannelNo] = useState('');
+  const [channelName, setChannelName] = useState('');
+  const classes = useStyles(props);
 
   /**
    * Focus name / number-field
@@ -88,10 +86,10 @@ const Channel = React.memo((props) => {
    * @param event
    */
   const focusInput = (event) => {
-    event.target.select()
-    notifyCursorPos(event.target.dataset.field)
-    enterEditMode(event)
-  }
+    event.target.select();
+    notifyCursorPos(event.target.dataset.field);
+    enterEditMode(event);
+  };
 
   /**
    * Blur Event
@@ -99,8 +97,8 @@ const Channel = React.memo((props) => {
    * @param event
    */
   const blurInput = (event) => {
-    disableEditMode(0, null)
-  }
+    disableEditMode(0, null);
+  };
 
   /**
    * Activate the Edit-Mode and set the the current name/channel-no for modification
@@ -108,60 +106,59 @@ const Channel = React.memo((props) => {
    */
   const enterEditMode = (event) => {
     if (isEditMode) {
-      return
+      return;
     }
 
-    setIsEditMode(true)
-    setChannelName(props.channelData.name)
-    setChannelNo(props.channelData.channelNo)
-  }
+    setIsEditMode(true);
+    setChannelName(props.channelData.name);
+    setChannelNo(props.channelData.channelNo);
+  };
 
   /**
    * Notify parent about cursor position (active field)
    * @param field
    */
   const notifyCursorPos = (field) => {
-
     // if cursor-position is update, we nothing to do
     if (props.cursorPos.channelId === props.channelData.channelId && props.cursorPos.field === field) {
-      return
+      return;
     }
 
     // call parent event handler
-    props.onCursorChange(props.channelData.channelId, field)
-  }
+    props.onCursorChange(props.channelData.channelId, field);
+  };
 
   /**
    * Keboard-Navigation
    * @param event
    */
   const handleKeyNav = (event) => {
-    let keys = {
-      38: "up", // KEY_UP
-      40: "down", // KEY_DOWN
-      13: "down" // ENTER
-    }
+    const keys = {
+      38: 'up', // KEY_UP
+      40: 'down', // KEY_DOWN
+      13: 'down', // ENTER
+    };
 
     // tab and current field is "name" then switch to next channel
     if (event.shiftKey && event.keyCode === 9 && event.target.dataset.field === 'no') {
-      disableEditMode("up", "name")
-      event.preventDefault()
+      disableEditMode('up', 'name');
+      event.preventDefault();
     } else if (event.shiftKey && event.keyCode === 9 && event.target.dataset.field === 'name') {
-      disableEditMode("current", "no")
-      event.preventDefault()
+      disableEditMode('current', 'no');
+      event.preventDefault();
     } else if (event.keyCode === 9 && event.target.dataset.field === 'name') {
-      disableEditMode("down", "no")
-      event.preventDefault()
+      disableEditMode('down', 'no');
+      event.preventDefault();
     } else if (event.keyCode === 9 && event.target.dataset.field === 'no') {
-      disableEditMode("current", "name")
-      event.preventDefault()
+      disableEditMode('current', 'name');
+      event.preventDefault();
     }
 
     if (event.keyCode in keys) {
-      disableEditMode(keys[event.keyCode], event.target.dataset.field)
-      event.preventDefault()
+      disableEditMode(keys[event.keyCode], event.target.dataset.field);
+      event.preventDefault();
     }
-  }
+  };
 
   /**
    * Disable Edit Mode
@@ -169,36 +166,36 @@ const Channel = React.memo((props) => {
    * so the parent component can handle the change
    */
   const disableEditMode = (nextChannelToEnter, nextFieldToEnter) => {
-    setIsEditMode(false)
+    setIsEditMode(false);
 
     // check if anything has changed, in case if not, do nothing anymore
     if (props.channelData.name !== channelName || props.channelData.channelNo !== channelNo) {
-      let newData = {}
-      newData['name'] = channelName
-      newData['channelNo'] = channelNo
-      props.onChannelChange({...props.channelData, ...newData})
+      const newData = {};
+      newData.name = channelName;
+      newData.channelNo = channelNo;
+      props.onChannelChange({ ...props.channelData, ...newData });
     }
 
     // navigate to next channel if requested
-    if (["up", "down", "current"].includes(nextChannelToEnter)) {
-      props.onKeyNavigation(nextChannelToEnter, nextFieldToEnter)
+    if (['up', 'down', 'current'].includes(nextChannelToEnter)) {
+      props.onKeyNavigation(nextChannelToEnter, nextFieldToEnter);
     } else {
-      props.onCursorChange(0, null)
+      props.onCursorChange(0, null);
     }
-  }
+  };
 
   const toggleChannelSelection = (event) => {
-    if (typeof props.onSelectionChange === "function") {
-      props.onSelectionChange(props.channelData.channelId)
+    if (typeof props.onSelectionChange === 'function') {
+      props.onSelectionChange(props.channelData.channelId);
     }
-  }
+  };
 
   return (
     <div style={props.style}>
       <div
         className={classes.root}
         onKeyDown={handleKeyNav}
-        id={"channel-" + props.channelData.channelId}
+        id={`channel-${props.channelData.channelId}`}
       >
         <Checkbox
           onChange={toggleChannelSelection}
@@ -211,8 +208,8 @@ const Channel = React.memo((props) => {
           data-field="no" // field-type for cursorPos
           tabIndex={props.channelTabIndex * 10000 + 1} // tabIndex for looping through inputs by tab
           value={isEditMode ? channelNo : props.channelData.channelNo}
-          readOnly={isEditMode ? false : true}
-          onChange={(e) => {setChannelNo(e.target.value)}}
+          readOnly={!isEditMode}
+          onChange={(e) => { setChannelNo(e.target.value); }}
           onFocus={focusInput} // if we get the focus we automatically enter the editmodus
           autoFocus={props.cursorPos.channelId === props.channelData.channelId && props.cursorPos.field === 'no'}
           onBlur={blurInput}
@@ -223,7 +220,7 @@ const Channel = React.memo((props) => {
           data-field="name"
           tabIndex={props.channelTabIndex * 10000 + 2}
           value={isEditMode ? channelName : props.channelData.name}
-          onChange={(e) => {setChannelName(e.target.value)}}
+          onChange={(e) => { setChannelName(e.target.value); }}
           onFocus={focusInput}
           autoFocus={props.cursorPos.channelId === props.channelData.channelId && props.cursorPos.field === 'name'}
           onBlur={blurInput}
@@ -231,7 +228,7 @@ const Channel = React.memo((props) => {
         />
       </div>
     </div>
-  )
-})
+  );
+});
 
-export default Channel
+export default Channel;
