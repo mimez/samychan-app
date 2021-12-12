@@ -1,32 +1,32 @@
-import React from "react";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import AppBar from "@mui/material/AppBar";
-import { Link } from "react-router-dom";
+import React from 'react';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import AppBar from '@mui/material/AppBar';
+import { Link } from 'react-router-dom';
 import makeStyles from '@mui/styles/makeStyles';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   filenameHeadline: {
     flexGrow: 1,
-  }
+  },
 }));
 
-const PackageHeader = (props) => {
+const PackageHeader = function (props) {
   const classes = useStyles();
   const handleDrawerToggle = () => {
-    props.onToggleDrawer()
-  }
+    props.onToggleDrawer();
+  };
 
   if (!props.scmPackage) {
-    return <AppBar></AppBar>
+    return <AppBar />;
   }
 
-  let hash = props.scmPackage.hash
-  let link = React.forwardRef((props, ref) => <Link {...props} to={"/p/" + hash + "/download"} ref={ref} />);
+  const { hash } = props.scmPackage;
+  const link = React.forwardRef((props, ref) => <Link {...props} to={`/p/${hash}/download`} ref={ref} />);
 
   return (
     <AppBar position="static">
@@ -36,7 +36,8 @@ const PackageHeader = (props) => {
           color="inherit"
           aria-label="menu"
           onClick={handleDrawerToggle}
-          size="large">
+          size="large"
+        >
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" className={classes.filenameHeadline}>
@@ -46,6 +47,6 @@ const PackageHeader = (props) => {
       </Toolbar>
     </AppBar>
   );
-}
+};
 
-export default PackageHeader
+export default PackageHeader;

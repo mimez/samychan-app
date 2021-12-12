@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-import Theme from "../../Theme";
-import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import Theme from '../../Theme';
 
-const Home = (props) => {
+const Home = function () {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={Theme}>
@@ -12,6 +12,6 @@ const Home = (props) => {
       </ThemeProvider>
     </StyledEngineProvider>
   );
-}
+};
 
-export default Home
+export default Home;
