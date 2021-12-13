@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
@@ -16,7 +17,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import makeStyles from '@mui/styles/makeStyles';
 import CircularProgress from '@mui/material/CircularProgress';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   title: {
     flexGrow: 1,
   },
@@ -29,7 +30,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChannelListSettings = function (props) {
+const ChannelListSettings = function ({
+  onFilterTextChange,
+  onSortChange,
+  exportUrl,
+  selectedChannels,
+  channelActions,
+  onOptionButtonSuccess,
+  optionButtons,
+  headline,
+  filterText,
+}) {
   const classes = useStyles();
 
   const [sortPopperIsVisible, setSortPopperIsVisible] = useState(false);
@@ -55,20 +66,20 @@ const ChannelListSettings = function (props) {
   ];
 
   const handleFilterTextChange = (e) => {
-    props.onFilterTextChange(e.target.value);
+    onFilterTextChange(e.target.value);
   };
 
   const handleSortChange = (sortOption) => {
-    props.onSortChange(sortOption.field, sortOption.dir, sortOption.type);
+    onSortChange(sortOption.field, sortOption.dir, sortOption.type);
     setSortPopperIsVisible(false);
   };
 
   const handleExport = () => {
-    window.open(props.exportUrl);
+    window.open(exportUrl);
   };
 
   let optionsButton;
-  if (props.selectedChannels.length > 0 && props.channelActions.length > 0) {
+  if (selectedChannels.length > 0 && channelActions.length > 0) {
     optionsButton = (
       <span>
         <Button
@@ -78,7 +89,7 @@ const ChannelListSettings = function (props) {
           ref={selectionAnchorRef}
           className={classes.button}
         >
-          {props.selectedChannels.length}
+          {selectedChannels.length}
           {' '}
           items selected
           {channelActionIsInProgress && <CircularProgress size={24} />}
@@ -88,13 +99,14 @@ const ChannelListSettings = function (props) {
           <Paper>
             <ClickAwayListener onClickAway={() => setSelectionPopperIsVisible(false)}>
               <MenuList>
-                {props.channelActions.map((item, key) => (
+                {channelActions.map((item, key) => (
                   <MenuItem
+                    // eslint-disable-next-line
                     key={key}
-                    onClick={(event) => {
-                      item.onClick(props.selectedChannels, () => {
+                    onClick={() => {
+                      item.onClick(selectedChannels, () => {
                         setChannelActionIsInProgress(false);
-                        props.onOptionButtonSuccess();
+                        onOptionButtonSuccess();
                       });
                       setChannelActionIsInProgress(true);
                       setSelectionPopperIsVisible(false);
@@ -112,7 +124,7 @@ const ChannelListSettings = function (props) {
   }
 
   let exportButton;
-  if (props.exportUrl !== undefined && props.exportUrl !== null && props.exportUrl.length > 0) {
+  if (exportUrl !== undefined && exportUrl !== null && exportUrl.length > 0) {
     exportButton = (
       <Tooltip title="Export as CSV">
         <IconButton
@@ -127,18 +139,19 @@ const ChannelListSettings = function (props) {
   }
 
   return (
+    // eslint-disable-next-line
     <Toolbar className="channel-list-settings" className={classes.toolbar}>
       <div>
         {optionsButton}
-        {props.optionButtons}
+        {optionButtons}
       </div>
       <Typography variant="h4" component="h1" noWrap className={classes.title}>
-        {props.headline}
+        {headline}
       </Typography>
       <div>
         <TextField
           label="Search..."
-          value={props.filterText}
+          value={filterText}
           onChange={handleFilterTextChange}
           variant="standard"
         />
@@ -157,8 +170,8 @@ const ChannelListSettings = function (props) {
           <Paper>
             <ClickAwayListener onClickAway={() => setSortPopperIsVisible(false)}>
               <MenuList>
-                {sortOptions.map((sortOption, index) => (
-                  <MenuItem key={sortOption.label} onClick={(event) => handleSortChange(sortOption)}>
+                {sortOptions.map((sortOption) => (
+                  <MenuItem key={sortOption.label} onClick={() => handleSortChange(sortOption)}>
                     {sortOption.label}
                   </MenuItem>
                 ))}
@@ -166,10 +179,34 @@ const ChannelListSettings = function (props) {
             </ClickAwayListener>
           </Paper>
         </Popper>
-        {props.options}
       </div>
     </Toolbar>
   );
+};
+
+ChannelListSettings.propTypes = {
+  onFilterTextChange: PropTypes.func,
+  onSortChange: PropTypes.func,
+  exportUrl: PropTypes.string,
+  selectedChannels: PropTypes.arrayOf(PropTypes.number),
+  channelActions: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string,
+    onClick: PropTypes.func,
+  })),
+  onOptionButtonSuccess: PropTypes.func,
+  optionButtons: PropTypes.element,
+  headline: PropTypes.string.isRequired,
+  filterText: PropTypes.string,
+};
+ChannelListSettings.defaultProps = {
+  onFilterTextChange: () => {},
+  onSortChange: () => {},
+  exportUrl: undefined,
+  selectedChannels: [],
+  channelActions: [],
+  onOptionButtonSuccess: () => {},
+  optionButtons: undefined,
+  filterText: '',
 };
 
 export default ChannelListSettings;

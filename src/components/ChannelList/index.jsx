@@ -45,7 +45,7 @@ const ChannelList = function ChannelList({
         channelsToSort.sort((a, b) => (a[sort.field] > b[sort.field] ? retB : retA));
     }
 
-    return channels;
+    return channelsToSort;
   };
 
   const handleSortChange = (field, dir, type) => {

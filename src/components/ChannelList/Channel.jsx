@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import makeStyles from '@mui/styles/makeStyles';
 import Checkbox from '@mui/material/Checkbox';
 
 const useStyles = makeStyles((theme) => ({
-  root: (props) => ({
+  root: (selected) => ({
     boxSizing: 'border-box',
     marginBottom: '5px',
     marginRight: '5px',
     width: '100%',
     overflow: 'hidden',
-    background: props.selected ? theme.palette.primary.light : '',
+    background: selected ? theme.palette.primary.light : '',
     borderBottom: `1px solid ${theme.palette.divider}`,
     display: 'flex',
     justifyContent: 'space-between',
@@ -51,11 +52,22 @@ const useStyles = makeStyles((theme) => ({
   }),
 }));
 
-const Channel = React.memo((props) => {
+const Channel = React.memo(({
+  channelData,
+  cursorPos,
+  onCursorChange,
+  onChannelChange,
+  onKeyNavigation,
+  onSelectionChange,
+  selected,
+  channelTabIndex,
+  channelNameReadOnly,
+}) => {
   /**
    * Testplan
    * Creatign a good user expierience is very important for editing a whole bunch of channels.
-   * Users are very different, some users will use mouse navigation others will use key-board navigation very heavily
+   * Users are very different, some users will use mouse navigation others will use key-board
+   * navigation very heavily
    * We have many different points to check, so there is a manual test plan to check:
    *
    * - Keyboard-Navigation without changes works properly (navigating by tab, enter, key-down/up)
@@ -64,7 +76,8 @@ const Channel = React.memo((props) => {
    * - If we click again we can set the cursor to a specific char
    * - writing inside the input works
    * - After editing a value and bluring the input it gets saved
-   * - After ediiting a value and doing keyboard-navigation (enter / key down) we get to the expected row
+   * - After ediiting a value and doing keyboard-navigation (enter / key down) we get to the
+   *   expected row
    * - Saving by tabs works properly
    */
 
@@ -76,7 +89,35 @@ const Channel = React.memo((props) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [channelNo, setChannelNo] = useState('');
   const [channelName, setChannelName] = useState('');
-  const classes = useStyles(props);
+  const classes = useStyles(selected);
+
+  /**
+   * Notify parent about cursor position (active field)
+   * @param field
+   */
+  const notifyCursorPos = (field) => {
+    // if cursor-position is update, we nothing to do
+    if (cursorPos.channelId === channelData.channelId && cursorPos.field === field) {
+      return;
+    }
+
+    // call parent event handler
+    onCursorChange(channelData.channelId, field);
+  };
+
+  /**
+   * Activate the Edit-Mode and set the the current name/channel-no for modification
+   * @param event
+   */
+  const enterEditMode = () => {
+    if (isEditMode) {
+      return;
+    }
+
+    setIsEditMode(true);
+    setChannelName(channelData.name);
+    setChannelNo(channelData.channelNo);
+  };
 
   /**
    * Focus name / number-field
@@ -92,40 +133,37 @@ const Channel = React.memo((props) => {
   };
 
   /**
+   * Disable Edit Mode
+   * By disabling edit mode we trigger the onChannelChange event (if any data has changed),
+   * so the parent component can handle the change
+   */
+  const disableEditMode = (nextChannelToEnter, nextFieldToEnter) => {
+    setIsEditMode(false);
+
+    // check if anything has changed, in case if not, do nothing anymore
+    if (channelData.name !== channelName || channelData.channelNo !== channelNo) {
+      const newData = {};
+      newData.name = channelName;
+      newData.channelNo = channelNo;
+      onChannelChange({ ...channelData, ...newData });
+    }
+
+    // navigate to next channel if requested
+    if (['up', 'down', 'current'].includes(nextChannelToEnter)) {
+      onKeyNavigation(nextChannelToEnter, nextFieldToEnter);
+    } else {
+      onCursorChange(0, null);
+    }
+  };
+
+  /**
    * Blur Event
-   * We just land here if we blur the input by mouse. Navigating by keyboard will not result in bluring input
+   * We just land here if we blur the input by mouse. Navigating by keyboard will not result in
+   * bluring input
    * @param event
    */
-  const blurInput = (event) => {
+  const blurInput = () => {
     disableEditMode(0, null);
-  };
-
-  /**
-   * Activate the Edit-Mode and set the the current name/channel-no for modification
-   * @param event
-   */
-  const enterEditMode = (event) => {
-    if (isEditMode) {
-      return;
-    }
-
-    setIsEditMode(true);
-    setChannelName(props.channelData.name);
-    setChannelNo(props.channelData.channelNo);
-  };
-
-  /**
-   * Notify parent about cursor position (active field)
-   * @param field
-   */
-  const notifyCursorPos = (field) => {
-    // if cursor-position is update, we nothing to do
-    if (props.cursorPos.channelId === props.channelData.channelId && props.cursorPos.field === field) {
-      return;
-    }
-
-    // call parent event handler
-    props.onCursorChange(props.channelData.channelId, field);
   };
 
   /**
@@ -160,75 +198,86 @@ const Channel = React.memo((props) => {
     }
   };
 
-  /**
-   * Disable Edit Mode
-   * By disabling edit mode we trigger the onChannelChange event (if any data has changed),
-   * so the parent component can handle the change
-   */
-  const disableEditMode = (nextChannelToEnter, nextFieldToEnter) => {
-    setIsEditMode(false);
-
-    // check if anything has changed, in case if not, do nothing anymore
-    if (props.channelData.name !== channelName || props.channelData.channelNo !== channelNo) {
-      const newData = {};
-      newData.name = channelName;
-      newData.channelNo = channelNo;
-      props.onChannelChange({ ...props.channelData, ...newData });
-    }
-
-    // navigate to next channel if requested
-    if (['up', 'down', 'current'].includes(nextChannelToEnter)) {
-      props.onKeyNavigation(nextChannelToEnter, nextFieldToEnter);
-    } else {
-      props.onCursorChange(0, null);
-    }
-  };
-
-  const toggleChannelSelection = (event) => {
-    if (typeof props.onSelectionChange === 'function') {
-      props.onSelectionChange(props.channelData.channelId);
+  const toggleChannelSelection = () => {
+    if (typeof onSelectionChange === 'function') {
+      onSelectionChange(channelData.channelId);
     }
   };
 
   return (
-    <div style={props.style}>
+    <div>
       <div
         className={classes.root}
         onKeyDown={handleKeyNav}
-        id={`channel-${props.channelData.channelId}`}
+        id={`channel-${channelData.channelId}`}
+        role="button"
+        tabIndex="0"
       >
         <Checkbox
           onChange={toggleChannelSelection}
-          checked={props.selected}
+          checked={selected}
           color="secondary"
         />
         <input
           type="text"
           className="channel-no"
           data-field="no" // field-type for cursorPos
-          tabIndex={props.channelTabIndex * 10000 + 1} // tabIndex for looping through inputs by tab
-          value={isEditMode ? channelNo : props.channelData.channelNo}
+          tabIndex={channelTabIndex * 10000 + 1} // tabIndex for looping through inputs by tab
+          value={isEditMode ? channelNo : channelData.channelNo}
           readOnly={!isEditMode}
           onChange={(e) => { setChannelNo(e.target.value); }}
           onFocus={focusInput} // if we get the focus we automatically enter the editmodus
-          autoFocus={props.cursorPos.channelId === props.channelData.channelId && props.cursorPos.field === 'no'}
+          // eslint-disable-next-line jsx-a11y/no-autofocus
+          autoFocus={cursorPos.channelId === channelData.channelId && cursorPos.field === 'no'}
           onBlur={blurInput}
         />
         <input
           type="text"
           className="name"
           data-field="name"
-          tabIndex={props.channelTabIndex * 10000 + 2}
-          value={isEditMode ? channelName : props.channelData.name}
+          tabIndex={channelTabIndex * 10000 + 2}
+          value={isEditMode ? channelName : channelData.name}
           onChange={(e) => { setChannelName(e.target.value); }}
           onFocus={focusInput}
-          autoFocus={props.cursorPos.channelId === props.channelData.channelId && props.cursorPos.field === 'name'}
+          // eslint-disable-next-line jsx-a11y/no-autofocus
+          autoFocus={cursorPos.channelId === channelData.channelId && cursorPos.field === 'name'}
           onBlur={blurInput}
-          readOnly={props.channelNameReadOnly}
+          readOnly={channelNameReadOnly}
         />
       </div>
     </div>
   );
 });
+
+Channel.propTypes = {
+  channelData: PropTypes.arrayOf(PropTypes.shape({
+    channelNo: PropTypes.number,
+    name: PropTypes.string,
+  })).isRequired,
+  cursorPos: PropTypes.shape({
+    channelId: PropTypes.number,
+    field: PropTypes.string,
+  }),
+  onCursorChange: PropTypes.func,
+  onChannelChange: PropTypes.func,
+  onKeyNavigation: PropTypes.func,
+  onSelectionChange: PropTypes.func,
+  selected: PropTypes.bool,
+  channelTabIndex: PropTypes.number,
+  channelNameReadOnly: PropTypes.bool,
+};
+Channel.defaultProps = {
+  cursorPos: PropTypes.shape({
+    channelId: 0,
+    field: 'no',
+  }),
+  onCursorChange: () => {},
+  onChannelChange: () => {},
+  onKeyNavigation: () => {},
+  onSelectionChange: () => {},
+  selected: false,
+  channelTabIndex: 0,
+  channelNameReadOnly: false,
+};
 
 export default Channel;
