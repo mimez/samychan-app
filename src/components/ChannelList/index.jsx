@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import ChannelListSettings from './ChannelListSettings';
 import ChannelListChannels from './ChannelListChannels';
 
-const Channel = function (props) {
+const ChannelList = function ChannelList({
+  channels,
+  onChannelChange,
+  channelActions,
+  optionButtons,
+  headline,
+  exportUrl,
+  channelNameReadOnly,
+}) {
   const defaultSort = { field: 'channel_no', dir: 'asc', type: 'number' };
 
   const [filter, setFilter] = useState({ text: '' });
   const [sort, setSort] = useState(defaultSort);
   const [selectedChannels, setSelectedChannels] = useState([]);
 
+  /* eslint-disable */
   const filterChannels = (channels) => {
     const filteredChannels = [];
     for (const i in channels) {
@@ -18,18 +28,21 @@ const Channel = function (props) {
     }
     return filteredChannels;
   };
+  /* eslint-enable */
 
-  const sortChannels = (channels) => {
+  const sortChannels = (channelsToSort) => {
     const retA = sort.dir === 'desc' ? 1 : -1;
     const retB = sort.dir === 'desc' ? -1 : 1;
 
     switch (sort.type) {
       case 'number':
-        channels.sort((a, b) => (parseInt(a[sort.field]) > parseInt(b[sort.field]) ? retA : retB));
+        /* eslint-disable */
+        channelsToSort.sort((a, b) => (parseInt(a[sort.field], 10) > parseInt(b[sort.field], 10) ? retA : retB));
+        /* eslint-enable */
         break;
-      default:
       case 'text':
-        channels.sort((a, b) => (a[sort.field] > b[sort.field] ? retB : retA));
+      default:
+        channelsToSort.sort((a, b) => (a[sort.field] > b[sort.field] ? retB : retA));
     }
 
     return channels;
@@ -39,16 +52,16 @@ const Channel = function (props) {
     setSort({ field, dir, type });
   };
 
-  const getChannelsToDisplay = (channels) => {
-    let channelsToDisplay = filterChannels(props.channels);
+  const getChannelsToDisplay = () => {
+    let channelsToDisplay = filterChannels(channels);
     channelsToDisplay = sortChannels(channelsToDisplay);
 
     return channelsToDisplay;
   };
 
   const handleChannelChange = (channel) => {
-    if (typeof props.onChannelChange === 'function') {
-      props.onChannelChange(channel);
+    if (typeof onChannelChange === 'function') {
+      onChannelChange(channel);
     }
   };
 
@@ -67,7 +80,7 @@ const Channel = function (props) {
     setSelectedChannels([]);
   };
 
-  const channelsToDisplay = getChannelsToDisplay(props.channels);
+  const channelsToDisplay = getChannelsToDisplay(channels);
 
   return (
     <div className="channel-list">
@@ -81,21 +94,42 @@ const Channel = function (props) {
         onSortChange={handleSortChange}
         onSelectionChange={handleSelectionChange}
         selectedChannels={selectedChannels}
-        channelActions={props.channelActions}
-        optionButtons={props.optionButtons}
+        channelActions={channelActions}
+        optionButtons={optionButtons}
         onOptionButtonSuccess={handleOptionButtonSuccess}
-        headline={props.headline}
-        exportUrl={props.exportUrl}
+        headline={headline}
+        exportUrl={exportUrl}
       />
       <ChannelListChannels
         channels={channelsToDisplay}
         onChannelChange={handleChannelChange}
         onSelectionChange={handleSelectionChange}
         selectedChannels={selectedChannels}
-        channelNameReadOnly={props.channelNameReadOnly}
+        channelNameReadOnly={channelNameReadOnly}
       />
     </div>
   );
 };
 
-export default Channel;
+ChannelList.propTypes = {
+  channels: PropTypes.arrayOf(PropTypes.shape({
+    channelId: PropTypes.number,
+    channelNo: PropTypes.number,
+    name: PropTypes.string
+  })).isRequired,
+  onChannelChange: PropTypes.func,
+  channelActions: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string,
+    onClick: PropTypes.func,
+  })).isRequired,
+  optionButtons: PropTypes.element,
+  headline: PropTypes.string,
+  exportUrl: PropTypes.string,
+  channelNameReadOnly: PropTypes.bool,
+};
+ChannelList.defaultProps = {
+  onChannelChange: () => {},
+  channelNameReadOnly: true,
+};
+
+export default ChannelList;

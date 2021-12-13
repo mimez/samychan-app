@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
@@ -6,11 +7,12 @@ import SaveIcon from '@mui/icons-material/Save';
 import CircularProgress from '@mui/material/CircularProgress';
 import makeStyles from '@mui/styles/makeStyles';
 import { useSnackbar } from 'material-ui-snackbar-provider';
+import PropTypes from 'prop-types';
 import apiUrlGenerator from '../../utils/apiUrlGenerator';
 import Api from '../../utils/Api';
 import ChannelList from '../ChannelList';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   title: {
     flexGrow: 1,
   },
@@ -19,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const File = function (props) {
+const File = function ({ scmPackage, onChange }) {
+  const { scmPackageHash, scmFileId } = useParams();
   const classes = useStyles();
   const snackbar = useSnackbar();
 
@@ -30,41 +33,43 @@ const File = function (props) {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    Api.getFile(props.match.params.scmPackageHash, props.match.params.scmFileId, (data) => {
+    Api.getFile(scmPackageHash, scmFileId, (data) => {
       setChannels(data.channels);
       setFilename(data.label);
       setIsInitialized(true);
     });
-  }, [props.match.params.scmPackageHash, props.match.params.scmFileId]);
+  }, [scmPackageHash, scmFileId]);
 
   const handleChannelChange = (channel) => {
     const newChannels = [...channels];
+    /* eslint-disable */
     for (const i in newChannels) {
       if (newChannels[i].channelId === channel.channelId) {
         newChannels[i] = channel;
       }
     }
+    /* eslint-enable */
     setChannels(newChannels);
     setModifiedChannels({ ...modifiedChannels, [channel.channelId]: channel });
   };
 
   const addChannelsToFav = (channelIds, favNo, clearAfterSaving) => {
-    Api.addChannelsToFav(props.match.params.scmPackageHash, favNo, channelIds, () => {
+    Api.addChannelsToFav(scmPackageHash, favNo, channelIds, () => {
       setModifiedChannels({});
       clearAfterSaving();
       snackbar.showMessage(
         `${channelIds.length} channel(s) successfully added to Fav #${favNo}`,
       );
-      props.onChange();
+      onChange();
     });
   };
 
   const save = () => {
     setIsSaving(true);
-    Api.saveFile(props.match.params.scmPackageHash, props.match.params.scmFileId, modifiedChannels, () => {
+    Api.saveFile(scmPackageHash, scmFileId, modifiedChannels, () => {
       setModifiedChannels({});
       setIsSaving(false);
-      props.onChange();
+      onChange();
       snackbar.showMessage(
         'File successfully saved',
       );
@@ -93,8 +98,9 @@ const File = function (props) {
   }
 
   const channelActions = [];
-  props.scmPackage.favorites.forEach((element) => {
-    channelActions.push({ label: `Add to Fav #${element.favNo}`, onClick: (channels, clearAfterSaving) => { addChannelsToFav(channels, element.favNo, clearAfterSaving); } });
+  // eslint-disable-next-line
+  scmPackage.favorites.forEach((element) => {
+    channelActions.push({ label: `Add to Fav #${element.favNo}`, onClick: (channelsToAdd, clearAfterSaving) => { addChannelsToFav(channelsToAdd, element.favNo, clearAfterSaving); } });
   });
 
   return (
@@ -106,7 +112,7 @@ const File = function (props) {
           channelActions={channelActions}
           optionButtons={modifiedChannelsAction}
           headline={filename}
-          exportUrl={apiUrlGenerator.buildFileExportUrl(props.match.params.scmPackageHash, props.match.params.scmFileId)}
+          exportUrl={apiUrlGenerator.buildFileExportUrl(scmPackageHash, scmFileId)}
         />
       )
       : (
@@ -117,6 +123,22 @@ const File = function (props) {
         </Snackbar>
       )
   );
+};
+
+File.propTypes = {
+  onChange: PropTypes.func,
+  scmPackage: PropTypes.shape({
+    hash: PropTypes.string.isRequired,
+    favorites: PropTypes.arrayOf(
+      PropTypes.shape({
+        favNo: PropTypes.number,
+        channelCount: PropTypes.number,
+      })
+    ),
+  }).isRequired,
+};
+File.defaultProps = {
+  onChange: () => {},
 };
 
 export default File;

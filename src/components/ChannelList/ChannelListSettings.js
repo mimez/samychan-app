@@ -88,8 +88,8 @@ const ChannelListSettings = function (props) {
           <Paper>
             <ClickAwayListener onClickAway={() => setSelectionPopperIsVisible(false)}>
               <MenuList>
-          {props.channelActions.map((item, key) => (
-                <MenuItem
+                {props.channelActions.map((item, key) => (
+                  <MenuItem
                     key={key}
                     onClick={(event) => {
                       item.onClick(props.selectedChannels, () => {
@@ -102,8 +102,8 @@ const ChannelListSettings = function (props) {
                   >
                     {item.label}
                   </MenuItem>
-              ))}
-        </MenuList>
+                ))}
+              </MenuList>
             </ClickAwayListener>
           </Paper>
         </Popper>
@@ -112,7 +112,7 @@ const ChannelListSettings = function (props) {
   }
 
   let exportButton;
-  if (props.exportUrl !== undefined && props.exportUrl.length > 0) {
+  if (props.exportUrl !== undefined && props.exportUrl !== null && props.exportUrl.length > 0) {
     exportButton = (
       <Tooltip title="Export as CSV">
         <IconButton
