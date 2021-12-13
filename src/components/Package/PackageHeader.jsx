@@ -53,8 +53,25 @@ const PackageHeader = function ({ onToggleDrawer, scmPackage }) {
 };
 
 PackageHeader.propTypes = {
+  scmPackage: PropTypes.shape({
+    hash: PropTypes.string,
+    scmPackageId: PropTypes.number,
+    filename: PropTypes.string,
+    files: PropTypes.arrayOf(PropTypes.shape({
+      scmFileId: PropTypes.number,
+      label: PropTypes.string,
+      icon: PropTypes.string,
+      channelCount: PropTypes.number,
+    })),
+    favorites: PropTypes.arrayOf(PropTypes.shape({
+      favNo: PropTypes.number,
+      channelCount: PropTypes.number,
+    })),
+  }).isRequired,
   onToggleDrawer: PropTypes.func,
-  scmPackage: PropTypes.object,
+};
+PackageHeader.defaultProps = {
+  onToggleDrawer: () => {},
 };
 
 export default PackageHeader;

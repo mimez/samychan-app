@@ -10,8 +10,8 @@ import StarIcon from '@mui/icons-material/Star';
 import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 
-const useStyles = makeStyles((open) => ({
-  root: (props) => ({
+const useStyles = makeStyles(() => ({
+  root: (open) => ({
     /* background: theme.palette.primary.light, */
     width: open ? 'auto' : '60px',
   }),
@@ -80,8 +80,24 @@ const PackageNavigation = function ({ scmPackage, open }) {
 };
 
 PackageNavigation.propTypes = {
-  scmPackage: PropTypes.object,
+  scmPackage: PropTypes.shape({
+    hash: PropTypes.string,
+    scmPackageId: PropTypes.number,
+    filename: PropTypes.string,
+    files: PropTypes.arrayOf(PropTypes.shape({
+      scmFileId: PropTypes.number,
+      label: PropTypes.string,
+      icon: PropTypes.string,
+      channelCount: PropTypes.number,
+    })),
+    favorites: PropTypes.arrayOf(PropTypes.shape({
+      favNo: PropTypes.number,
+      channelCount: PropTypes.number,
+    })),
+  }).isRequired,
   open: PropTypes.bool,
 };
-
+PackageNavigation.defaultProps = {
+  open: true,
+};
 export default PackageNavigation;

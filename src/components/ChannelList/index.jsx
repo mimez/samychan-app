@@ -115,7 +115,7 @@ ChannelList.propTypes = {
   channels: PropTypes.arrayOf(PropTypes.shape({
     channelId: PropTypes.number,
     channelNo: PropTypes.number,
-    name: PropTypes.string
+    name: PropTypes.string,
   })).isRequired,
   onChannelChange: PropTypes.func,
   channelActions: PropTypes.arrayOf(PropTypes.shape({
@@ -123,13 +123,15 @@ ChannelList.propTypes = {
     onClick: PropTypes.func,
   })).isRequired,
   optionButtons: PropTypes.element,
-  headline: PropTypes.string,
+  headline: PropTypes.string.isRequired,
   exportUrl: PropTypes.string,
   channelNameReadOnly: PropTypes.bool,
 };
 ChannelList.defaultProps = {
   onChannelChange: () => {},
   channelNameReadOnly: true,
+  exportUrl: undefined,
+  optionButtons: undefined,
 };
 
 export default ChannelList;

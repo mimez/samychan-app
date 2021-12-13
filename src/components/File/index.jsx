@@ -133,7 +133,7 @@ File.propTypes = {
       PropTypes.shape({
         favNo: PropTypes.number,
         channelCount: PropTypes.number,
-      })
+      }),
     ),
   }).isRequired,
 };
