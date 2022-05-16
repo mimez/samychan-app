@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Package = function () {
+const Package = function Package() {
   const classes = useStyles();
   const { scmPackageHash } = useParams();
   const [scmPackage, setScmPackage] = useState(undefined);

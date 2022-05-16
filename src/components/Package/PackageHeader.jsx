@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const PackageHeader = function ({ onToggleDrawer, scmPackage }) {
+const PackageHeader = function PackageHeader({ onToggleDrawer, scmPackage }) {
   const classes = useStyles();
   const handleDrawerToggle = () => {
     onToggleDrawer();

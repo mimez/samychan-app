@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Api from '../../utils/Api';
 
-const Stats = function () {
+const Stats = function Stats() {
   const [stats, setStats] = useState([]);
 
   useEffect(() => {

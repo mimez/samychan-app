@@ -3,7 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import Theme from '../../Theme';
 
-const Home = function () {
+const Home = function Home() {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={Theme}>

@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const PackageNavigation = function ({ scmPackage, open }) {
+const PackageNavigation = function PackageNavigation({ scmPackage, open }) {
   const classes = useStyles(open);
   const path = useLocation().pathname;
 

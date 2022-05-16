@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Error = function ({ onReset }) {
+const Error = function Error({ onReset }) {
   const classes = useStyles();
 
   return (

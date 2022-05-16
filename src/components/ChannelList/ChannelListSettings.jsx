@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ChannelListSettings = function ({
+const ChannelListSettings = function ChannelListSettings({
   onFilterTextChange,
   onSortChange,
   exportUrl,

@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Favorites = function ({ onChange }) {
+const Favorites = function Favorites({ onChange }) {
   const { scmPackageHash, favNo } = useParams();
   const snackbar = useSnackbar();
   const [isInitialized, setIsInitialized] = useState(false);

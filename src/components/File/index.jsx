@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const File = function ({ scmPackage, onChange }) {
+const File = function File({ scmPackage, onChange }) {
   const { scmPackageHash, scmFileId } = useParams();
   const classes = useStyles();
   const snackbar = useSnackbar();

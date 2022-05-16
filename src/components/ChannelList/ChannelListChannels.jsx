@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Channel from './Channel';
 
-const ChannelListChannels = function ({
+const ChannelListChannels = function ChannelListChannels({
   channels,
   onChannelChange,
   onSelectionChange,
@@ -14,7 +14,6 @@ const ChannelListChannels = function ({
   const [cursorPos, setCursorPos] = useState({ channelId: 0, field: 'no' });
 
   const handleKeyNavigation = (dir, field) => {
-    console.log('handleKeyNavigation');
     let currentIndex;
     let newIndex;
 

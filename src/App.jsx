@@ -12,7 +12,7 @@ import Theme from './Theme';
 
 require('dotenv').config();
 
-const App = function () {
+const App = function App() {
   return (
     <SnackbarProvider SnackbarProps={{ autoHideDuration: 4000 }}>
       <StyledEngineProvider injectFirst>

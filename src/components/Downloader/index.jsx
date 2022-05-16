@@ -5,7 +5,7 @@ import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import Button from '@mui/material/Button';
 import apiUrlGenerator from '../../utils/apiUrlGenerator';
 
-const Download = function () {
+const Download = function Downloader() {
   const { scmPackageHash } = useParams();
   return (
     <Container>

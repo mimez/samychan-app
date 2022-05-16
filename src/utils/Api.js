@@ -32,7 +32,9 @@ const Api = {
         callback(data);
       })
       .catch((error) => {
+        /* eslint-disable */
         console.log(error);
+        /* eslint-enable */
       });
   },
 
