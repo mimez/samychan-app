@@ -113,6 +113,7 @@ const File = function File({ scmPackage, onChange }) {
           optionButtons={modifiedChannelsAction}
           headline={filename}
           exportUrl={apiUrlGenerator.buildFileExportUrl(scmPackageHash, scmFileId)}
+          channelNameReadOnly={false}
         />
       )
       : (

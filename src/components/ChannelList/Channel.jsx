@@ -62,6 +62,7 @@ const Channel = React.memo(({
   selected,
   channelTabIndex,
   channelNameReadOnly,
+  style,
 }) => {
   /**
    * Testplan
@@ -205,7 +206,7 @@ const Channel = React.memo(({
   };
 
   return (
-    <div>
+    <div style={style}>
       <div
         className={classes.root}
         onKeyDown={handleKeyNav}
@@ -263,6 +264,7 @@ Channel.propTypes = {
   onKeyNavigation: PropTypes.func,
   onSelectionChange: PropTypes.func,
   selected: PropTypes.bool,
+  style: PropTypes.string,
   channelTabIndex: PropTypes.number,
   channelNameReadOnly: PropTypes.bool,
 };
@@ -278,6 +280,7 @@ Channel.defaultProps = {
   selected: false,
   channelTabIndex: 0,
   channelNameReadOnly: false,
+  style: '',
 };
 
 export default Channel;
