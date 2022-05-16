@@ -1,4 +1,4 @@
-import AutoSizer from 'react-virtualized-auto-sizer';
+import { AutoSizer } from 'react-virtualized';
 import { FixedSizeList as List } from 'react-window';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
