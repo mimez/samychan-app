@@ -1,5 +1,5 @@
 {
-    "ignorePatterns": ["**/components/Favorites/*", "**/components/Downloader/*", "src/serviceWorker.js"],
+    "ignorePatterns": ["src/serviceWorker.js"],
     "env": {
         "browser": true,
         "es2021": true

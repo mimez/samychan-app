@@ -251,10 +251,11 @@ const Channel = React.memo(({
 });
 
 Channel.propTypes = {
-  channelData: PropTypes.arrayOf(PropTypes.shape({
+  channelData: PropTypes.shape({
+    channelId: PropTypes.number,
     channelNo: PropTypes.number,
     name: PropTypes.string,
-  })).isRequired,
+  }).isRequired,
   cursorPos: PropTypes.shape({
     channelId: PropTypes.number,
     field: PropTypes.string,
@@ -264,7 +265,9 @@ Channel.propTypes = {
   onKeyNavigation: PropTypes.func,
   onSelectionChange: PropTypes.func,
   selected: PropTypes.bool,
-  style: PropTypes.string,
+  style: PropTypes.shape({
+
+  }),
   channelTabIndex: PropTypes.number,
   channelNameReadOnly: PropTypes.bool,
 };

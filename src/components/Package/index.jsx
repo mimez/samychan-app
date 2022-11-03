@@ -85,7 +85,7 @@ const Package = function Package() {
 
   if (isError) {
     return <Error onReset={loadData} />;
-  } if (typeof scmPackage !== 'undefined') {
+  } if (typeof scmPackage !== 'undefined' && typeof scmPackageNavigation !== 'undefined') {
     return render();
   }
   return showLoadingScreen();
