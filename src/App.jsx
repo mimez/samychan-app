@@ -4,7 +4,6 @@ import { SnackbarProvider } from 'material-ui-snackbar-provider';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import './custom.scss';
-// import 'jquery/dist/jquery.min.js';
 import Package from './components/Package';
 import Home from './components/Home';
 import Stats from './components/Stats';
