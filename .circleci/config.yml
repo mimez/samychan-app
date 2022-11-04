@@ -1,16 +1,16 @@
 version: 2.1
 orbs:
-  node: circleci/node@1.1.6
+  node: circleci/node@5.0.3
 jobs:
   build-and-test:
-    executor:
-      name: node/default
+    docker:
+      - image: cimg/base:stable
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm run build
+      - node/install:
+          install-yarn: true 
+          node-version: v18.9.0 
+          yarn-version: '1.22.19' 
 workflows:
   build-and-test:
     jobs:
